@@ -1,1 +1,1 @@
-# aspnet-bookloan-sample
+# aspnet-assettracking-sample
