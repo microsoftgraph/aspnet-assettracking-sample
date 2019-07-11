@@ -56,31 +56,23 @@
 
 <!-- Table with panel -->
 <h5>Available Books</h5>
-<div class="card card-cascade narrower">
-
-    <!--Card image-->
-
-    <div class="px-4">
-        <div class="table-wrapper">
-            <!--Table-->
-            <table class="table table-hover mb-0">
+<div class="px-4">
+    <div class="table-wrapper">
+        <!--Table-->
+        <div class="table-responsive">
+            <table class="table table-hover mb-0" id="t_books">
 
                 <!--Table head-->
                 <thead>
                     <tr>
                         <th class="th-lg">
-                            <a>
-                                Book ISBN
-                                <i class="fas fa-sort ml-1"></i>
-                            </a>
+                            Book ISBN
                         </th>
                         <th class="th-lg">
                             Book Title
-                            <i class="fas fa-sort ml-1"></i>
                         </th>
                         <th class="th-lg">
                             Author
-                            <i class="fas fa-sort ml-1"></i>
                         </th>
                         <th class="th-lg">
                         </th>
@@ -94,8 +86,9 @@
                         <td>Essential C# 7.0 (6th Edition) </td>
                         <td>Otto</td>
                         <td>
-                            <a asp-controller="Home" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="Home" asp-action="DeleteBookDetails"> Delete</a>
+                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
+                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
                         </td>
 
                     </tr>
@@ -104,8 +97,9 @@
                         <td>Pro TypeScript: Application-Scale JavaScript Development</td>
                         <td>Ted</td>
                         <td>
-                            <a asp-controller="Home" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="Home" asp-action="DeleteBookDetails"> Delete</a>
+                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
+                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
                         </td>
                     </tr>
                     <tr>
@@ -113,8 +107,9 @@
                         <td>The Clean Coder: A Code of Conduct for Professional Programmers</td>
                         <td>Mary</td>
                         <td>
-                            <a asp-controller="Home" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="Home" asp-action="DeleteBookDetails"> Delete</a>
+                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
+                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
                         </td>
                     </tr>
                     <tr>
@@ -122,8 +117,9 @@
                         <td>Clean Code: A Handbook of Agile Software Craftsmanship</td>
                         <td>Paul</td>
                         <td>
-                            <a asp-controller="Home" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="Home" asp-action="DeleteBookDetails"> Delete</a>
+                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
+                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
                         </td>
 
                     </tr>
@@ -132,8 +128,9 @@
                         <td>Professional C# 7 and .NET Core 2.0 </td>
                         <td>Larry</td>
                         <td>
-                            <a asp-controller="Home" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="Home" asp-action="DeleteBookDetails"> Delete</a>
+                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
+                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
                         </td>
                     </tr>
                 </tbody>
@@ -141,51 +138,44 @@
             </table>
             <!--Table-->
         </div>
-
     </div>
 
 </div>
+
+
 <div class="row"></div>
 <div class="row"></div>
+
+
 <!-- Table with panel -->
 <h5>Borrowed Books</h5>
-<div class="card card-cascade narrower">
 
-    <!--Card image-->
-
-    <div class="px-4">
-        <div class="table-wrapper">
+<div class="px-4">
+    <div class="table-wrapper">
+        <div class="table-responsive">
             <!--Table-->
-            <table class="table table-hover mb-0">
+            <table class="table table-hover mb-0" id="t_borrowed_books">
 
                 <!--Table head-->
                 <thead>
                     <tr>
                         <th class="th-lg">
-                            <a>
-                                Book ISBN
-                                <i class="fas fa-sort ml-1"></i>
-                            </a>
+                            Book ISBN
                         </th>
                         <th class="th-lg">
                             Book Title
-                            <i class="fas fa-sort ml-1"></i>
                         </th>
                         <th class="th-lg">
                             Author
-                            <i class="fas fa-sort ml-1"></i>
                         </th>
                         <th class="th-lg">
                             Borrowed By
-                            <i class="fas fa-sort ml-1"></i>
                         </th>
                         <th class="th-lg">
                             Date Borrowed
-                            <i class="fas fa-sort ml-1"></i>
                         </th>
                         <th class="th-lg">
                             Due Date
-                            <i class="fas fa-sort ml-1"></i>
                         </th>
                         <th class="th-lg">
                         </th>
@@ -201,8 +191,10 @@
                         <td>Elinor Kaguongo</td>
                         <td>1/7/2019</td>
                         <td>19/7/2019</td>
-                        <td><a asp-controller="Home" asp-action="ViewBookLog"> View Book Log </a>|
-                        <a asp-controller="Home" asp-action="ViewBookDetails"> View Book Details </a></td>
+                        <td>
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookHistory"> View History </a>|
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View Book Details </a>
+                        </td>
 
                     </tr>
                     <tr>
@@ -212,16 +204,19 @@
                         <td>Nicole Sigei</td>
                         <td>3/7/2019</td>
                         <td>19/7/2019</td>
-                        <td><a asp-controller="Home" asp-action="ViewBookLog"> View Book Log </a> |
-                        <a asp-controller="Home" asp-action="ViewBookDetails"> View Book Details </a></td>
-                    </tr>                  
+                        <td>
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookHistory"> View History </a> |
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View Book Details </a>
+                        </td>
+                    </tr>
                 </tbody>
                 <!--Table body-->
             </table>
             <!--Table-->
         </div>
-
     </div>
 
 </div>
+
+
 

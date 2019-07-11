@@ -12,17 +12,7 @@ namespace AssetTracking.Controllers
     {
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult OfficeItems()
-        {
-            return View();
-        }
-
-        public IActionResult OfficeBooks()
-        {
-            return View();
+            return View("~/Views/Admin/Index.cshtml");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,0 +1,197 @@
+﻿@{
+    ViewData["Title"] = "Office Items";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="text-left">
+    <a href="" class="btn btn-default btn-rounded my-3" data-toggle="modal" data-target="#modalItemForm">
+        Add Office Item
+    </a>
+</div>
+
+<div class="modal fade" id="modalItemForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> New Office Item</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <div class="md-form form-sm">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form8" class="active">Item No.</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form9" class="active">Item Name</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form9" class="active">Item type</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form9" class="active">Description</label>
+                </div>
+                <div class="text-center mt-1-half">
+                    <button class="btn btn-info mb-2 waves-effect waves-light">Add<i class="fas fa-send ml-1"></i></button>
+                </div>
+
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+<!-- Table with panel -->
+<h5>Available Items</h5>
+
+<div class="px-4">
+    <div class="table-wrapper">
+        <div class="table-responsive">
+        <!--Table-->
+        <table class="table table-hover mb-0" id="t_items">
+            <!--Table head-->
+            <thead>
+                <tr>
+                    <th class="th-lg">
+                        #
+                    </th>
+                    <th class="th-lg">
+                        Item Name
+                    </th>
+                    <th class="th-lg">
+                        Item Type
+                    </th>
+                    <th class="th-lg">
+                        Description                       
+                    </th>
+                    <th class="th-lg">
+                    </th>
+                </tr>
+            </thead>
+            <!--Table head-->
+            <!--Table body-->
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Jabra 123</td>
+                    <td>Speaker</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+                    <td>
+                        <a asp-controller="OfficeItems" asp-action="UpdateBookDetails"> Edit </a>|
+                        <a asp-controller="OfficeItems" asp-action="DeleteItemDetails"> Delete </a>|
+                        <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View</a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Monopoly</td>
+                    <td>Game</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+                    <td>
+                        <a asp-controller="OfficeItems" asp-action="UpdateItemDetails"> Edit </a>|
+                        <a asp-controller="OfficeItems" asp-action="DeleteItemDetails"> Delete </a>|
+                        <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Chess</td>
+                    <td>Game</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+                    <td>
+                        <a asp-controller="OfficeItems" asp-action="UpdateItemDetails"> Edit </a>|
+                        <a asp-controller="OfficeItems" asp-action="DeleteItemDetails"> Delete </a>|
+                        <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Cards</td>
+                    <td>Game</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+                    <td>
+                        <a asp-controller="OfficeItems" asp-action="UpdateItemDetails"> Edit </a>|
+                        <a asp-controller="OfficeItems" asp-action="DeleteItemDetails"> Delete </a>|
+                        <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View</a>
+                    </td>
+
+                </tr>
+            </tbody>
+            <!--Table body-->
+        </table>
+    <!--Table-->
+        </div>
+    </div>
+
+</div>
+
+<div class="row"></div>
+<div class="row"></div>
+
+<h5>Borrowed Items</h5>
+<div class="px-4">
+    <div class="table-wrapper">
+        <div class="table-responsive">
+            <!--Table-->
+            <table class="table table-hover mb-0" id="t_borrowed_items">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th class="th-lg">
+                            #
+                        </th>
+                        <th class="th-lg">
+                            Item Name
+                        </th>
+                        <th class="th-lg">
+                            Item Type
+                        </th>
+                        <th class="th-lg">
+                            Borrowed By
+                        </th>
+                        <th class="th-lg">
+                            Date Borrowed
+                        </th>
+                        <th class="th-lg">
+                            Due Date
+                        </th>
+                        <th class="th-lg">
+                        </th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Jabra 123</td>
+                        <td>Speaker</td>
+                        <td>Elinor Kaguongo</td>
+                        <td>1/7/2019</td>
+                        <td>19/7/2019</td>
+                        <td>
+                            <a asp-controller="OfficeItems" asp-action="ViewItemHistory"> View History </a>|
+                            <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View Item Details </a>
+                        </td>
+                    </tr>
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+</div>
