@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@if (User.Identity.IsAuthenticated)
+{
 
+}
 <div class="text-center">
     <h1 class="display-4">Welcome to the Office Asset Tracking Tool</h1>
 </div>
@@ -31,7 +34,20 @@
         </div>
     </div>
 </div>
-<div class="row"></div>
+<div class="row">
+
+    <div class="col-md-12">
+        @* For Test Purspose *@
+        @if (ViewBag.List != null)
+        {
+            @foreach (var item in ViewBag.List)
+            {
+                @item.DisplayName
+            }
+        }
+    </div>
+
+</div>
 <h4>Currently Borrowed Items</h4>
 <div class="table-responsive">
     <table class="table table-hover" id="t_current">
@@ -56,7 +72,7 @@
                 <td>Professional C# 7 and .Net Core</td>
                 <td>Nicole Sigei</td>
                 <td>3/7/2019</td>
-                <td id="due_date">19/7/2019<span id="overdue"  style="display:none"><i class="fas fa-exclamation"></i> </span></td>
+                <td id="due_date">19/7/2019<span id="overdue" style="display:none"><i class="fas fa-exclamation"></i> </span></td>
                 <td><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Send Reminder</button></td>
             </tr>
         </tbody>
