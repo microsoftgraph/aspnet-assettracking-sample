@@ -10,11 +10,17 @@ namespace AssetTracking.Controllers
 {
     public class HomeController : Controller
     {
+        [Route("admin")]
         public IActionResult Index()
         {
             return View("~/Views/Admin/Index.cshtml");
         }
 
+        [Route("")]
+        public IActionResult MyBooks()
+        {
+            return View("~/Views/User/MyBooks.cshtml");
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

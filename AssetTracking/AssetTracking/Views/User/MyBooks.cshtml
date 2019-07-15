@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewData["Title"] = "MyBooks";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h3>My Items</h3>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <h4>Currently Borrowed</h4>
+    </div>
+    <div class="col-md-6 " style="text-align:end;">
+        <a href="#">View Books </a> |
+        <a href="#">View Items</a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="card" style="height:500px;">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="~/images/CleanCode.jpg" style="padding:5px 50px 0px 50px;">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Clean Code: A Handbook of Agile Software Craftsmanship<i class="material-icons right">more_vert</i></span>
+                <p>by Robert C. Martin</p>
+            </div>
+            <div class="card-action">
+                <a href="#">Return</a>
+                <a href="#">Extend</a>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Clean Code: A Handbook of Agile Software Craftsmanship<i class="material-icons right">close</i></span>
+                <p>
+                    Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees.
+                    Every year, countless hours and significant resources are lost because of poorly written code. But it doesn’t have to be that way.
+                </p>
+                <p>
+                    <b>Book ISBN: <span>1221-1212-1212</span></b>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card" style="height:500px;">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="~/images/cards.jpg" style="padding:5px 50px 0px 50px;">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Deck of Cards<i class="material-icons right">more_vert</i></span>
+                <p>55 playing cards</p>
+            </div>
+            <div class="card-action">
+                <a href="#">Return</a>
+                <a href="#">Extend</a>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Deck of Cards<i class="material-icons right">close</i></span>
+                <p> 55 playing cards
+                </p>
+                <p>
+                    <b>Item No.: <span>34</span></b>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card" style="height:500px;">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="~/images/jabraSpeaker.jpg" style="padding:5px 50px 0px 50px;">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Jabra GN<i class="material-icons right">more_vert</i></span>
+                <p></p>
+            </div>
+            <div class="card-action">
+                <a href="#">Return</a>
+                <a href="#">Extend</a>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Clean Code: A Handbook of Agile Software Craftsmanship<i class="material-icons right">close</i></span>
+                <p>
+                    
+                </p>
+                <p>
+                    <b>Item No. <span>1221-1212-1212</span></b>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h4>Previously Borrowed</h4>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <img src="~/images/ProfessionalC.jpg" style="height:100px" />
+    </div>
+    <div class="col-md-6">
+        <h5>Professional C# 7 and .NET Core 2.0</h5>
+        <p>By Christian Nagel</p>
+        <p>Borrowed on : <span style="color:blue">01/07/2019 </span></p>
+        <p>Returned on : <span style="color:blue">07/07/2019 </span></p>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <img src="~/images/ProTypeScript.jpg" style="height:100px" />
+    </div>
+    <div class="col-md-6">
+        <h5>Pro TypeScript: Application-Scale JavaScript Development</h5>
+        <p>By Steve Fenton</p>
+        <p>Borrowed on : <span style="color:blue">10/06/2019 </span></p>
+        <p>Returned on : <span style="color:blue">30/06/2019 </span></p>
+    </div>
+</div>
+
