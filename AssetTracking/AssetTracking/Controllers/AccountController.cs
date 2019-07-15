@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetTracking.Controllers
@@ -8,7 +9,6 @@ namespace AssetTracking.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-
         [HttpGet]
         public IActionResult SignIn()
         {
@@ -33,7 +33,6 @@ namespace AssetTracking.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                // Redirect to home page if the user is authenticated.
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             return View();
@@ -44,6 +43,7 @@ namespace AssetTracking.Controllers
         {
             return View();
         }
+       
     }
 }
 

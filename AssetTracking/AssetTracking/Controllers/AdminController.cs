@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Security.Claims;
 
 namespace AssetTracking.Controllers
-{
+{ 
     public class AdminController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -25,19 +25,15 @@ namespace AssetTracking.Controllers
         public GraphServiceClient GraphClient { get; private set; }
 
         [Authorize]
-        // Loads the user's profile.
         public async Task<IActionResult> Index(string email)
         {
             if (User.Identity.IsAuthenticated)
             {
-                //Gets the  users's email.
                 email = email ?? User.FindFirst("preferred_username")?.Value;
                 ViewData["Email"] = email;
 
-                //Initialize the GraphServiceClient.
                 GraphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
                 ViewData["Response"] = await GraphService.GetUserJson(GraphClient, email, HttpContext);
-                ViewData["Picture"] = await GraphService.GetPictureBase64(GraphClient, email, HttpContext);
 
                 /***  For Test Purpose  Pending implementation**/
                 // To Test Sharepoint Sites
@@ -59,12 +55,10 @@ namespace AssetTracking.Controllers
         {
             return View();
         }
-
-        public IActionResult OfficeBooks()
+        public IActionResult OfficeBooks()  
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
         public ActionResult Error(string message, string debug)

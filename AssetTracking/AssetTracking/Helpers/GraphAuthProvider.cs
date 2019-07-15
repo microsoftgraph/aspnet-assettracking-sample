@@ -28,10 +28,7 @@ namespace AssetTracking.Helpers
             Authority = _app.Authority;
             _scopes = azureOptions.GraphScopes.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         }
-
         public string Authority { get; }
-        // Gets an access token. First tries to get the access token from the token cache.
-        // Using password (secret) to authenticate. Production apps should use a certificate.
         public async Task<string> GetUserAccessTokenAsync(string userId)
         {
             var account = await _app.GetAccountAsync(userId);
@@ -47,8 +44,7 @@ namespace AssetTracking.Helpers
                 var result = await _app.AcquireTokenSilent(_scopes, account).ExecuteAsync();
 
                 return result.AccessToken;
-            }
-            // Unable to retrieve the access token silently.
+            }            
             catch (Exception)
             {
                 throw new ServiceException(new Error
@@ -59,10 +55,8 @@ namespace AssetTracking.Helpers
                 });
             }
         }
-
         public async Task<AuthenticationResult> GetUserAccessTokenByAuthorizationCode(string authorizationCode)
         {
-
             return await _app.AcquireTokenByAuthorizationCode(_scopes, authorizationCode).ExecuteAsync();
         }
     }
