@@ -15,7 +15,7 @@ namespace AssetTracking.Extensions
         public static AuthenticationBuilder AddAzureAd(this AuthenticationBuilder builder)
             => builder.AddAzureAd(_ => { });
 
-        public static AuthenticationBuilder AddAzureAd(this AuthenticationBuilder builder, Action<azureOptions> configureOptions)
+        public static AuthenticationBuilder AddAzureAd(this AuthenticationBuilder builder, Action<AzureOptions> configureOptions)
         {
             builder.Services.Configure(configureOptions);
             builder.Services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, ConfigureAzureOptions>();
@@ -25,12 +25,12 @@ namespace AssetTracking.Extensions
         }
         public class ConfigureAzureOptions : IConfigureNamedOptions<OpenIdConnectOptions>
         {
-            private readonly azureOptions _azureOptions;
+            private readonly AzureOptions _azureOptions;
             private readonly IGraphAuthProvider _authProvider;
 
-            public azureOptions GetAzureAdOptions() => _azureOptions;
+            public AzureOptions GetAzureAdOptions() => _azureOptions;
 
-            public ConfigureAzureOptions(IOptions<azureOptions> azureOptions, IGraphAuthProvider authProvider)
+            public ConfigureAzureOptions(IOptions<AzureOptions> azureOptions, IGraphAuthProvider authProvider)
             {
                 _azureOptions = azureOptions.Value;
                 _authProvider = authProvider;

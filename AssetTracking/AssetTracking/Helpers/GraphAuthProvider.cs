@@ -13,7 +13,7 @@ namespace AssetTracking.Helpers
         private readonly string[] _scopes;
         public GraphAuthProvider(IConfiguration configuration)
         {
-            var azureOptions = new azureOptions();
+            var azureOptions = new AzureOptions();
             configuration.Bind("AzureAd", azureOptions);
 
             _app = ConfidentialClientApplicationBuilder.Create(azureOptions.ClientId)

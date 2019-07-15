@@ -1,5 +1,5 @@
 ﻿namespace AssetTracking.Extensions
-{    public class azureOptions
+{    public class AzureOptions
     {
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
