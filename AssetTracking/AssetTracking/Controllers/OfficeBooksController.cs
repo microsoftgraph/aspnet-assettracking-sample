@@ -9,10 +9,15 @@ namespace AssetTracking.Controllers
     [Route("[controller]")]
     public class OfficeBooksController : Controller
     {
-        [Route("")]
+        [Route("[controller]/[action]")]
         public IActionResult OfficeBooks()
         {
             return View("~/Views/Admin/OfficeBooks.cshtml");
+        }
+        [Route("")]
+        public IActionResult ViewOfficeBooks()
+        {
+            return View("~/Views/User/Books.cshtml");
         }
     }
 }
