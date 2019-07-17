@@ -4,15 +4,45 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h3>My Items</h3>
+<!-- Section: Available Items -->
+<section>
+    <h3 class="text-center">Welcome to the Office Asset Tracking Tool</h3>
+    <hr />
+    <div class="row"></div>
+    <div class="row">
+        <div class="col-md-6" style="border-right: 1px solid #eee; padding-bottom:50px;">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="~/images/bookStack.jpg" style="height:150px;"/>
+                </div>
+                <div class="col-md-7 text-center">
+                    <h5> Books </h5>
+                    <p style="padding:20px 0px 20px 0px ;"> Borrow books available in the office</p>
+                    <a class="waves-effect waves-light btn-large">View Books</a>
+                </div>
+            </div>          
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="~/images/officeItems.jpg" style="height:150px;"/>
+                </div>
+                <div class="col-md-7 text-center">
+                    <h5> Other Office Items </h5>
+                    <p style="padding:20px 0px 20px 0px "> Borrow other items available in the office.</p>
+                    <a class="waves-effect waves-light btn-large">View Other Items </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section: available Items-->
+
+<h3 class="text-center">My Items</h3>
 <hr />
 <div class="row">
     <div class="col-md-6">
         <h4>Currently Borrowed</h4>
-    </div>
-    <div class="col-md-6 " style="text-align:end;">
-        <a href="#">View Books </a> |
-        <a href="#">View Items</a>
     </div>
 </div>
 <hr />
@@ -58,7 +88,8 @@
             </div>
             <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4">Deck of Cards<i class="material-icons right">close</i></span>
-                <p> 55 playing cards
+                <p>
+                    55 playing cards
                 </p>
                 <p>
                     <b>Item No.: <span>34</span></b>
@@ -80,12 +111,12 @@
                 <a href="#">Extend</a>
             </div>
             <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Clean Code: A Handbook of Agile Software Craftsmanship<i class="material-icons right">close</i></span>
+                <span class="card-title grey-text text-darken-4">Jabra GN-Netcom Speaker<i class="material-icons right">close</i></span>
                 <p>
-                    
+
                 </p>
                 <p>
-                    <b>Item No. <span>1221-1212-1212</span></b>
+                    <b>Item No. <span>35</span></b>
                 </p>
             </div>
         </div>
