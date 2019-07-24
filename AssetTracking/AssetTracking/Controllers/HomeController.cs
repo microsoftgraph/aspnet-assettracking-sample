@@ -23,11 +23,7 @@ namespace AssetTracking.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
        
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public ActionResult Error(string message, string debug)
-        {
-            return RedirectToAction("Index");
-        }
+       
 
     }
 }
