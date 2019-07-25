@@ -104,3 +104,7 @@ table.dataTable tfoot td {
 }
 
 
+.datepicker-modal{
+    max-height:375px !important; 
+}
+

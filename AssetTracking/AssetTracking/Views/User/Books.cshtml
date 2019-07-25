@@ -12,9 +12,10 @@
         <img src="~/images/ProfessionalC.jpg" style="height:100px" />
     </div>
     <div class="col-md-6">
-        <h5>Professional C# 7 and .NET Core 2.0</h5>
-        <p>By Christian Nagel</p>
-        <a class="waves-effect waves-light btn">Borrow </a>
+        <p style="font-size:12px;"> ISBN: <span id="isbn">978-1119449270</span></p>
+        <h5 id="title">Professional C# 7 and .NET Core 2.0</h5>
+        <p>By <span id="author">Christian Nagel</span></p>
+        <a class="waves-effect waves-light btn" data-toggle="modal" data-target="#modalBorrowForm">Borrow </a>
         <a class="waves-effect waves-light btn">View Wait list </a>
         <a class="btn disabled">Add to Wait list </a>
     </div>
@@ -34,3 +35,51 @@
     </div>
 </div>
 <hr />
+
+<div class="modal fade" id="modalBorrowForm" tabindex="-1" role="dialog" aria-labelledby="BorrowBook"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> Borrow Book</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <div class="md-form form-sm">
+                    <input type="text" id="bookISBN" class="form-control">
+                    <label for="form8" class="active">Book ISBN</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <input type="text" id="bookTitle" class="form-control">
+                    <label for="form9" class="active">Book Title</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <input type="text" id="bookAuthor" class="form-control">
+                    <label for="form9" class="active">Author</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <input type="text" id="borrowDate" class="form-control">
+                    <label for="form9" class="active">Borrow Date </label>
+                </div>
+                <div class="md-form form-sm">
+                    <input type="text" id="returnDate" class="form-control">
+                    <label for="form9" class="active">Return Date </label>
+                </div>
+                <div class="text-center mt-1-half">
+                    <button class="btn btn-info mb-2 waves-effect waves-light" asp-controller="OfficBooks" asp-action="AddBook">Borrow<i class="fas fa-send ml-1"></i></button>
+                </div>
+
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>

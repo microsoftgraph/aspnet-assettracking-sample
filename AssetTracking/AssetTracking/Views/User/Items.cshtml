@@ -11,9 +11,10 @@
         <img src="~/images/cards.jpg" style="height:100px" />
     </div>
     <div class="col-md-6">
-        <h5>Deck of Cards : 55 Playing Cards</h5>
+        <p style="font-size:12px">Item No. <span id="item_no">55</span></p>
+        <h5 id="item_name">Deck of Cards : 55 Playing Cards</h5>
         <br />
-        <a class="waves-effect waves-light btn">Borrow </a>
+        <a class="waves-effect waves-light btn" data-toggle="modal" data-target="#modalBorrowItemForm">Borrow </a>
         <a class="waves-effect waves-light btn">View Wait list </a>
         <a class="btn disabled">Add to Wait list </a>
     </div>
@@ -42,5 +43,47 @@
         <a class="waves-effect waves-light btn">Borrow </a>
         <a class="waves-effect waves-light btn">View Wait list </a>
         <a class="btn disabled">Add to Wait list </a>
+    </div>
+</div>
+
+<div class="modal fade" id="modalBorrowItemForm" tabindex="-1" role="dialog" aria-labelledby="BorrowItem"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> Borrow Book</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <div class="md-form form-sm">
+                    <input type="text" id="itemNo" class="form-control">
+                    <label for="form10" class="active">Item No.</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <input type="text" id="itemName" class="form-control">
+                    <label for="form10" class="active">Item Name</label>
+                </div>
+                <div class="md-form form-sm">
+                    <input type="text" id="borrowDate" class="form-control">
+                    <label for="form10" class="active">Borrow Date </label>
+                </div>
+                <div class="md-form form-sm">
+                    <input type="text" id="returnDate" class="form-control">
+                    <label for="form10" class="active">Return Date </label>
+                </div>
+                <div class="text-center mt-1-half">
+                    <button class="btn btn-info mb-2 waves-effect waves-light" asp-controller="OfficBooks" asp-action="AddBook">Borrow<i class="fas fa-send ml-1"></i></button>
+                </div>
+
+            </div>
+        </div>
+        <!--/.Content-->
     </div>
 </div>
