@@ -9,6 +9,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Graph" Version="1.16.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.1.0" />
+    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="1.1.5-preview" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="5.5.0" />
+    <PackageReference Include="Microsoft.Owin" Version="4.0.1" />
+    <PackageReference Include="Microsoft.Owin.Security" Version="4.0.1" />
+    <PackageReference Include="Microsoft.Owin.Security.OAuth" Version="4.0.1" />
+    <PackageReference Include="Microsoft.Owin.Security.OpenIdConnect" Version="4.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 

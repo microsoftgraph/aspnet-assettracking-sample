@@ -1,24 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AssetTracking.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Graph;
 
 namespace AssetTracking.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController()
+        {
+        }
+        public GraphServiceClient GraphClient { get; private set; }
+
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            return View("~/Views/Admin/Index.cshtml");
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+            return View();
+        }        
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+       
+       
+
     }
 }
