@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssetTracking.Controllers
 {
-    //[Route("[controller]")]
     public class OfficeBooksController : Controller
     {
         [Route("admin/[controller]")]
@@ -14,6 +13,7 @@ namespace AssetTracking.Controllers
         {
             return View("~/Views/Admin/OfficeBooks.cshtml");
         }
+
         [Route("[controller]")]
         public IActionResult ViewOfficeBooks()
         {
