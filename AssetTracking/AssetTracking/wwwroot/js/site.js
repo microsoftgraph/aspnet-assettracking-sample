@@ -71,27 +71,6 @@ $('#counter').each(function() {
 
 });
 
-//var st = document.getElementById("due_date").innerHTML;
-//console.log(st);
-//var dt = new Date(st);
-//var dt = dt.toLocaleDateString('en-GB');
-//console.log(dt);
-//var due_date = new Date(dt);
-//console.log(due);
-//var td = new Date();
-
-//function due(td) {
-//    if (due_date < td) {
-//        console.log("Book is overdue");
-//        document.getElementById("overdue").style.visibility = "visible";
-//    }
-//    else {
-//        document.getElementById("overdue").style.visibility = "hidden";
-//    };
-//};
-
-//due();
-
 today = new Date();
 var dd = today.getDate();
 var mm = today.getMonth() + 1; //As January is 0.
@@ -103,14 +82,6 @@ var current_day = dd + sp + mm + sp + yyyy;
 
 document.getElementById("borrowDate").value = current_day;
 document.getElementById("borrowDate").disabled = true;
-
-//var itemNo = document.getElementById("item_no").innerHTML;
-//document.getElementById("itemNo").value = itemNo;
-//document.getElementById("itemNo").disabled = true;
-
-//var item_name = document.getElementById("item_name").innerHTML;
-//document.getElementById("itemName").value = item_name;
-//document.getElementById("itemName").disabled = true;
 
 var isbn = document.getElementById("isbn").innerHTML;
 document.getElementById("bookISBN").value = isbn;
