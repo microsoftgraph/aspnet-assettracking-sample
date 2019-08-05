@@ -107,3 +107,7 @@ table.dataTable tfoot td {
     max-height:375px !important; 
 }
 
+nav ul a{
+    color:blue;
+}
+
