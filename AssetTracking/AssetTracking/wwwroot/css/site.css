@@ -103,6 +103,11 @@ table.dataTable tfoot td {
     border-top: 0px none black;
 }
 
+.datepicker-modal{
+    max-height:375px !important; 
+}
+
 nav ul a{
     color:blue;
 }
+

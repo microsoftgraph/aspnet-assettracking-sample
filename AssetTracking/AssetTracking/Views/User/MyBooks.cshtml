@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewData["Title"] = "MyBooks";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- Section: Available Items -->
+<section>
+    <h3 class="text-center">Welcome to the Office Asset Tracking Tool</h3>
+    <hr />
+    <div class="row"></div>
+    <div class="row">
+        <div class="col-md-6" style="border-right: 1px solid #eee; padding-bottom:50px;">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="~/images/bookStack.jpg" style="height:150px;"/>
+                </div>
+                <div class="col-md-7 text-center">
+                    <h5> Books </h5>
+                    <p style="padding:20px 0px 20px 0px ;"> Borrow books available in the office</p>
+                    <a class="waves-effect waves-light btn-large" asp-controller="OfficeBooks" asp-action="ViewOfficeBooks" >View Books</a>
+                </div>
+            </div>          
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="~/images/officeItems.jpg" style="height:150px;"/>
+                </div>
+                <div class="col-md-7 text-center">
+                    <h5> Other Office Items </h5>
+                    <p style="padding:20px 0px 20px 0px "> Borrow other items available in the office.</p>
+                    <a class="waves-effect waves-light btn-large" asp-controller="OfficeItems" asp-action="ViewOfficeItems">View Other Items </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section: available Items-->
+
+<h3 class="text-center">My Items</h3>
+<hr />
+<div class="row"></div>
+<ul class="nav nav-tabs" style="padding-left:50px; font-size:20px;">
+    <li class="active">
+        <a data-toggle="tab" href="#currentlyBorrowed" style="padding-right:100px;">Currently Borrowed</a>
+    </li>
+    <li>
+        <a data-toggle="tab" href="#previouslyBorrowed">Previously Borrowed</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div id="currentlyBorrowed" class="tab-pane fade in active">
+        <h4>Currently Borrowed</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <img src="~/images/CleanCode.jpg" style="height:100px" />
+            </div>
+            <div class="col-md-6">
+                <h5>Clean Code: A Handbook of Agile Software Craftsmanship</h5>
+                <p>by Robert C. Martin</p>
+                <p>Borrowed on : <span style="color:blue">17/07/2019 </span></p>
+                <p>Due Date : <span style="color:blue">31/07/2019 </span></p>
+                <a class="waves-effect waves-light btn-large">Return </a>
+                <a class="waves-effect waves-light btn-large">Extend </a>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <img src="~/images/cards.jpg" style="height:100px" />
+            </div>
+            <div class="col-md-6">
+                <h5>Deck of Cards</h5>
+                <p>55 Playing cards</p>
+                <p>Borrowed on : <span style="color:blue">17/07/2019 </span></p>
+                <p>Due Date : <span style="color:blue">18/07/2019 </span></p>
+                <a class="waves-effect waves-light btn-large">Return </a>
+                <a class="waves-effect waves-light btn-large">Extend </a>
+            </div>
+        </div>
+    </div>
+    <div id="previouslyBorrowed" class="tab-pane fade">
+        <h4>Previously Borrowed</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <img src="~/images/ProfessionalC.jpg" style="height:100px" />
+            </div>
+            <div class="col-md-6">
+                <h5>Professional C# 7 and .NET Core 2.0</h5>
+                <p>By Christian Nagel</p>
+                <p>Borrowed on : <span style="color:blue">01/07/2019 </span></p>
+                <p>Returned on : <span style="color:blue">07/07/2019 </span></p>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <img src="~/images/ProTypeScript.jpg" style="height:100px" />
+            </div>
+            <div class="col-md-6">
+                <h5>Pro TypeScript: Application-Scale JavaScript Development</h5>
+                <p>By Steve Fenton</p>
+                <p>Borrowed on : <span style="color:blue">10/06/2019 </span></p>
+                <p>Returned on : <span style="color:blue">30/06/2019 </span></p>
+            </div>
+        </div>
+    </div>
+</div>
