@@ -1,16 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace AssetTracking.Models
 {
     public class OfficeBook
     {
-        [JsonIgnore]
-        public string SharePointItemId { get; set; }
-
         [JsonProperty(PropertyName = "BookID")]
-
-        public Guid BookID { get; set; }
+        public string ItemId { get; set; }
 
         public string Title { get; set; }
 

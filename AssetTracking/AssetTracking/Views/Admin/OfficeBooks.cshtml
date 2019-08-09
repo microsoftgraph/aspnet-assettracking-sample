@@ -1,58 +1,60 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "OfficeBooks";
 }
 
 <h1>Office Books</h1>
+
 <div class="text-left">
     <a href="" class="btn btn-default btn-rounded my-3" data-toggle="modal" data-target="#modalBookForm">
         Add Office Book
     </a>
 </div>
 
-<div class="modal fade" id="modalBookForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog cascading-modal" role="document">
-        <!--Content-->
-        <div class="modal-content">
+<form asp-controller="OfficeBooks" asp-action="AddBooks" method="post">
+    <div class="modal fade" id="modalBookForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <!--Content-->
+            <div class="modal-content">
 
-            <!--Header-->
-            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
-                <h4 class="title"><i class="fas fa-pencil-alt"></i> New Office Book</h4>
-                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
+                <!--Header-->
+                <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                    <h4 class="title"><i class="fas fa-pencil-alt"></i> New Office Book</h4>
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body mb-0">
+                    <div class="md-form form-sm">
+                        <input type="text" id="ISBN" name="ISBN" class="form-control">
+                        <label for="form8" class="active">Book ISBN</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input type="text" id="Title" name="Title" class="form-control">
+                        <label for="form9" class="active">Book Title</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input type="text" id="Author" name="Author" class="form-control">
+                        <label for="form9" class="active">Author</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input type="text" id="BookDescription" name="BookDescription" class="form-control">
+                        <label for="form9" class="active">Description</label>
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button class="btn btn-info mb-2 waves-effect waves-light" asp-controller="OfficeBooks" asp-action="AddBooks">Add Book<i class="fas fa-send ml-1"></i></button>
+                    </div>
+
+                </div>
             </div>
-            <!--Body-->
-            <div class="modal-body mb-0">
-                <div class="md-form form-sm">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form8" class="active">Book ISBN</label>
-                </div>
-
-                <div class="md-form form-sm">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form9" class="active">Book Title</label>
-                </div>
-
-                <div class="md-form form-sm">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form9" class="active">Author</label>
-                </div>
-
-                <div class="md-form form-sm">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form9" class="active">Description</label>
-                </div>
-                <div class="text-center mt-1-half">
-                    <button class="btn btn-info mb-2 waves-effect waves-light">Add Book<i class="fas fa-send ml-1"></i></button>
-                </div>
-
-            </div>
+            <!--/.Content-->
         </div>
-        <!--/.Content-->
     </div>
-</div>
+</form>
 
 <!-- Table with panel -->
 <h5>Available Books</h5>
@@ -60,11 +62,14 @@
     <div class="table-wrapper">
         <!--Table-->
         <div class="table-responsive">
-            <table class="table table-hover mb-0" id="t_books">
+            <table class="table table-hover mb-0" id="tableBooks">
 
                 <!--Table head-->
                 <thead>
                     <tr>
+                        <th class="th-lg" style="display:none">
+                            Book ID
+                        </th>
                         <th class="th-lg">
                             Book ISBN
                         </th>
@@ -75,71 +80,123 @@
                             Author
                         </th>
                         <th class="th-lg">
+                            Description
+                        </th>
+                        <th class="th-lg">
                         </th>
                     </tr>
                 </thead>
                 <!--Table head-->
                 <!--Table body-->
                 <tbody>
-                    <tr>
-                        <td>1234</td>
-                        <td>Essential C# 7.0 (6th Edition) </td>
-                        <td>Otto</td>
-                        <td>
-                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
-                        </td>
+                    @if (ViewBag.List != null)
+                    {
+                        @foreach (var item in ViewBag.List)
+                        {
+                            <tr>
+                                <td style="display:none">@item.ItemId</td>
+                                <td>@item.ISBN</td>
+                                <td>@item.Title </td>
+                                <td>@item.Author</td>
+                                <td>@item.BookDescription</td>
+                                <td>
+                                    <a id="editing" data-toggle="modal" data-target="#EditBookForm"> Edit </a>|
+                                    <a id="deleting" data-toggle="modal" data-target="#DeleteBookForm"> Delete </a>|
+                                    <a asp-controller="OfficeBooks" asp-action="GetBooks"> View </a>
+                                </td>
 
-                    </tr>
-                    <tr>
-                        <td>12345</td>
-                        <td>Pro TypeScript: Application-Scale JavaScript Development</td>
-                        <td>Ted</td>
-                        <td>
-                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1234</td>
-                        <td>The Clean Coder: A Code of Conduct for Professional Programmers</td>
-                        <td>Mary</td>
-                        <td>
-                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1234</td>
-                        <td>Clean Code: A Handbook of Agile Software Craftsmanship</td>
-                        <td>Paul</td>
-                        <td>
-                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
-                        </td>
+                            </tr>
+                        }
+                    }
 
-                    </tr>
-                    <tr>
-                        <td>1234</td>
-                        <td>Professional C# 7 and .NET Core 2.0 </td>
-                        <td>Larry</td>
-                        <td>
-                            <a asp-controller="OfficeBooks" asp-action="UpdateBookDetails"> Edit </a>|
-                            <a asp-controller="OfficeBooks" asp-action="DeleteBookDetails"> Delete </a>|
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View </a>
-                        </td>
-                    </tr>
                 </tbody>
                 <!--Table body-->
             </table>
             <!--Table-->
+
+
         </div>
     </div>
 
+</div>
+@model OfficeBook
+<div class="modal fade" id="EditBookForm" tabindex="-1" role="dialog" aria-labelledby="Edit"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> Edit Office Item</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <form asp-controller="OfficeBooks" asp-action="UpdateBook" method="post">
+                    <div class="md-form form-sm">
+                        <input asp-for="ItemId" type="text" id="Id" name="ItemId" class="form-control" style="display:none">
+                        <input asp-for="ISBN" type="text" id="BookISBN" name="ISBN" class="form-control">
+                        <label for="form8" class="active">Book ISBN</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input asp-for="Title" type="text" id="BookTitle" name="Title" class="form-control">
+                        <label for="form9" class="active">Book Title</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input asp-for="Author" type="text" id="BookAuthor" name="Author" class="form-control">
+                        <label for="form9" class="active">Book Author</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input asp-for="BookDescription" type="text" id="BookDesc" name="BookDescription" class="form-control">
+                        <label for="form9" class="active">Description</label>
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button class="btn btn-info mb-2 waves-effect waves-light" asp-controller="OfficeBooks" asp-action="UpdateBook">Update<i class="fas fa-send ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+
+<div class="modal fade" id="DeleteBookForm" tabindex="-1" role="dialog" aria-labelledby="Delete"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> Delete Office Book</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <p>Are you sure you want to delete this?</p>
+                <form asp-controller="OfficeBooks" asp-action="DeleteBook" method="post">
+                    <div class="md-form form-sm">
+                        <input asp-for="ItemId" type="text" id="BId" name="SharePointItemId" class="form-control" style="display:none">
+                        <input asp-for="Title" type="text" id="BTitle" name="Title" class="form-control" disabled="">
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button class="btn btn-info mb-2 waves-effect waves-light" asp-controller="OfficeBooks" asp-action="DeleteBook">Delete<i class="fas fa-send ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+<div>
 </div>
 
 
@@ -217,6 +274,7 @@
     </div>
 
 </div>
+
 
 
 
