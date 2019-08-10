@@ -9,49 +9,53 @@
     </a>
 </div>
 
-<div class="modal fade" id="modalItemForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog cascading-modal" role="document">
-        <!--Content-->
-        <div class="modal-content">
+<form asp-controller="OfficeItem" asp-action="AddItem" method="post">
+    <div class="modal fade" id="modalBookForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <!--Content-->
+            <div class="modal-content">
 
-            <!--Header-->
-            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
-                <h4 class="title"><i class="fas fa-pencil-alt"></i> New Office Item</h4>
-                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
+                <!--Header-->
+                <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                    <h4 class="title"><i class="fas fa-pencil-alt"></i> New Office Item</h4>
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body mb-0">
+                    <div class="md-form form-sm">
+                        <input type="text" id="OfficeItemID" name="OfficeItemID" class="form-control">
+                        <label for="form9" class="active">ItemId</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input type="text" id="SerialNo" name="SerialNo" class="form-control">
+                        <label for="form9" class="active">SerialNo</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input type="text" id="Resource_x0020_IDLookupId" name="Resource_x0020_IDLookupId" class="form-control">
+                        <label for="form9" class="active">Resource</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input type="text" id="SerialNo" name="SerialNo" class="form-control">
+                        <label for="form9" class="active">SerialNo</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input type="text" id="Description" name="Description" class="form-control">
+                        <label for="form9" class="active">ItemDescription</label>
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button class="btn btn-info mb-2 waves-effect waves-light" asp-controller="OfficeItems" asp-action="AddItems">Add Item<i class="fas fa-send ml-1"></i></button>
+                    </div>
+                </div>
             </div>
-            <!--Body-->
-            <div class="modal-body mb-0">
-                <div class="md-form form-sm">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form8" class="active">Item No.</label>
-                </div>
-
-                <div class="md-form form-sm">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form9" class="active">Item Name</label>
-                </div>
-
-                <div class="md-form form-sm">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form9" class="active">Item type</label>
-                </div>
-
-                <div class="md-form form-sm">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form9" class="active">Description</label>
-                </div>
-                <div class="text-center mt-1-half">
-                    <button class="btn btn-info mb-2 waves-effect waves-light">Add<i class="fas fa-send ml-1"></i></button>
-                </div>
-
-            </div>
+            <!--/.Content-->
         </div>
-        <!--/.Content-->
     </div>
-</div>
+</form>
 
 <!-- Table with panel -->
 <h5>Available Items</h5>
@@ -59,85 +63,142 @@
 <div class="px-4">
     <div class="table-wrapper">
         <div class="table-responsive">
-        <!--Table-->
-        <table class="table table-hover mb-0" id="t_items">
-            <!--Table head-->
-            <thead>
-                <tr>
-                    <th class="th-lg">
-                        #
-                    </th>
-                    <th class="th-lg">
-                        Item Name
-                    </th>
-                    <th class="th-lg">
-                        Item Type
-                    </th>
-                    <th class="th-lg">
-                        Description                       
-                    </th>
-                    <th class="th-lg">
-                    </th>
-                </tr>
-            </thead>
-            <!--Table head-->
-            <!--Table body-->
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Jabra 123</td>
-                    <td>Speaker</td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-                    <td>
-                        <a asp-controller="OfficeItems" asp-action="UpdateBookDetails"> Edit </a>|
-                        <a asp-controller="OfficeItems" asp-action="DeleteItemDetails"> Delete </a>|
-                        <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View</a>
-                    </td>
+            <!--Table-->
+            <table class="table table-hover mb-0" id="t_items">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th class="th-lg" style="display:none">
+                            ItemId
+                        </th>
+                        <th class="th-lg">
+                            Title
+                        </th>
+                        <th class="th-lg">
+                            ResourceId
+                        </th>
+                        <th class="th-lg">
+                            Serial No
+                        </th>
+                        <th class="th-lg">
+                            Description
+                        </th>
+                        <th class="th-lg">
+                        </th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    @if (ViewBag.List != null)
+                    {
+                        @foreach (var item in ViewBag.List)
+                        {
+                            <tr>
+                                <td style="display:none">@item.ResourceId</td>
+                                <td>@item.ItemId</td>
+                                <td>@item.Title </td>
+                                <td>@item.ResourceId</td>
+                                <td>@item.SerialNo</td>
+                                <td>@item.ItemDescription</td>
+                                <td>
+                                    <a id="editing" data-toggle="modal" data-target="#EditBookForm"> Edit </a>|
+                                    <a id="deleting" data-toggle="modal" data-target="#DeleteBookForm"> Delete </a>|
+                                    <a asp-controller="OfficeItems" asp-action="GetItems"> View </a>
+                                </td>
 
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Monopoly</td>
-                    <td>Game</td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-                    <td>
-                        <a asp-controller="OfficeItems" asp-action="UpdateItemDetails"> Edit </a>|
-                        <a asp-controller="OfficeItems" asp-action="DeleteItemDetails"> Delete </a>|
-                        <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Chess</td>
-                    <td>Game</td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-                    <td>
-                        <a asp-controller="OfficeItems" asp-action="UpdateItemDetails"> Edit </a>|
-                        <a asp-controller="OfficeItems" asp-action="DeleteItemDetails"> Delete </a>|
-                        <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Cards</td>
-                    <td>Game</td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-                    <td>
-                        <a asp-controller="OfficeItems" asp-action="UpdateItemDetails"> Edit </a>|
-                        <a asp-controller="OfficeItems" asp-action="DeleteItemDetails"> Delete </a>|
-                        <a asp-controller="OfficeItems" asp-action="ViewItemDetails"> View</a>
-                    </td>
+                            </tr>
+                        }
+                    }
 
-                </tr>
-            </tbody>
-            <!--Table body-->
-        </table>
-    <!--Table-->
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
         </div>
     </div>
 
 </div>
+</div>
+@model OfficeItem
+<div class="modal fade" id="EditItemForm" tabindex="-1" role="dialog" aria-labelledby="Edit"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
 
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> Edit Office Item</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <form asp-controller="OfficeItems" asp-action="UpdateItems" method="post">
+                    <div class="md-form form-sm">
+                        <input asp-for="ItemId" type="text" id="OfficeItemID" name="ItemId" class="form-control" style="display:none">
+                        <input asp-for="Title" type="text" id="Title" name="Tile" class="form-control">
+                        <label for="form8" class="active">Book ISBN</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input asp-for="Title" type="text" id="BookTitle" name="Title" class="form-control">
+                        <label for="form9" class="active">Book Title</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input asp-for="SerialNo" type="text" id="SerialNo" name="SerialNo" class="form-control">
+                        <label for="form9" class="active">SerialNo</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input asp-for="ResourceId" type="text" id="ResourceId" name="ResourceId" class="form-control">
+                        <label for="form9" class="active">ResourceId</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input asp-for="ItemDescription" type="text" id="Description" name="ItemDescription" class="form-control">
+                        <label for="form9" class="active">ItemDescription</label>
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button class="btn btn-info mb-2 waves-effect waves-light" asp-controller="OfficeItems" asp-action="UpdateItems">Update<i class="fas fa-send ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+
+<div class="modal fade" id="DeleteItemForm" tabindex="-1" role="dialog" aria-labelledby="Delete"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> Delete Office Item</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <p>Are you sure you want to delete this?</p>
+                <form asp-controller="OfficeItem" asp-action="DeleteItem" method="post">
+                    <div class="md-form form-sm">
+                        <input asp-for="ItemId" type="text" id="Id" name="ItemId" class="form-control" style="display:none">
+                        <input asp-for="Title" type="text" id="Title" name="Title" class="form-control" disabled="">
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button class="btn btn-info mb-2 waves-effect waves-light" asp-controller="OfficeItems" asp-action="DeleteItem">Delete<i class="fas fa-send ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
 <div class="row"></div>
 <div class="row"></div>
 
