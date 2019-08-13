@@ -12,54 +12,48 @@ namespace AssetTracking.Controllers
     public class OfficeBooksController : Controller
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
-        public IOfficeBookRepository _officeBookRepository;
+        private IOfficeBookRepository _officeBookRepository;
+        private GraphServiceClient _graphClient;
 
-        public OfficeBooksController(IGraphSdkHelper graphSdkHelper)
-        {
+        public  OfficeBooksController( IGraphSdkHelper graphSdkHelper, IOfficeBookRepository officeBookRepository) 
+        { 
             _graphSdkHelper = graphSdkHelper;
+            _officeBookRepository = officeBookRepository;
         }
-        public GraphServiceClient GraphClient { get; private set; }
-
-        [Route("")]
-        public IActionResult OfficeBooks()
+            
+        [HttpGet]
+        public async Task<IActionResult> OfficeBooks()
         {
             if (User.Identity.IsAuthenticated)
             {
-                GraphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                var user = GraphClient.Me.Request().GetAsync();
+                _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+                List<OfficeBook> officeBook = await _officeBookRepository.GetBooks(_graphClient);
+                ViewBag.List = officeBook;
+                return View(officeBook);
             }
-            return View("~/Views/Admin/OfficeBooks.cshtml");
-        }
-
-        [Route("/GetBooks")]
-        [HttpPost]
-        public async Task<IActionResult> GetBooks()
-        {
-            List<OfficeBook> officeBook = await _officeBookRepository.GetBooks();
-            ViewBag.List = officeBook;
             return View();
         }
 
-        [Route("/AddBooks")]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<bool> AddBook(OfficeBook officeBook)
+        public async Task<IActionResult> AddBook(OfficeBook officeBook)
         {
-            bool result = await _officeBookRepository.AddBook(officeBook);
-            return result;
+            _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+            bool result = await _officeBookRepository.AddBook(officeBook,_graphClient);
+            return RedirectToAction("~/Views/OfficeBooks/OfficeBooks.cshtml");
         }
 
         [HttpPut]
         public async Task<bool> UpdateBook(OfficeBook officeBook)
         {
-            bool result = await _officeBookRepository.UpdateBook(officeBook);
+            bool result = await _officeBookRepository.UpdateBook(officeBook, _graphClient);
             return result;
         }
         [Route("/DeleteBook")]
         [HttpPost]
         public async Task<bool> DeleteBook(OfficeBook officeBook)
         {
-            bool result = await _officeBookRepository.DeleteBook(officeBook);
+            bool result = await _officeBookRepository.DeleteBook(officeBook, _graphClient);
             return result;
         }
     }

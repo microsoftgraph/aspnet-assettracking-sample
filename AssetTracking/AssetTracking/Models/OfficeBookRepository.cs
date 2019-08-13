@@ -12,16 +12,16 @@ namespace AssetTracking.Models
         private ISiteListsCollectionPage sharePointLists;
         private readonly string itemId = null;
         public GraphServiceClient GraphClient { get; private set; }
-        public async Task<List<OfficeBook>> GetBooks()
+        public async Task<List<OfficeBook>> GetBooks(GraphServiceClient graphClient)
         {
-            sharePointLists = await Sites.GetLists(GraphClient, siteId);
+            sharePointLists = await Sites.GetLists(graphClient, siteId);
             List<OfficeBook> _officeBooksDirectoryList = new List<OfficeBook>();
 
             if (sharePointLists != null)
             {
                 var _officeBookList = sharePointLists.Where(x => x.DisplayName.Contains("Office Books")).FirstOrDefault();
                 var _listId = _officeBookList.Id;
-                var _officeBookItems = await GetListItems(GraphClient, siteId, _listId);
+                var _officeBookItems = await GetListItems(graphClient, siteId, _listId);
 
                 foreach (var item in _officeBookItems)
                 {
@@ -35,14 +35,14 @@ namespace AssetTracking.Models
             }
             return _officeBooksDirectoryList;
         }
-        public async Task<bool> AddBook(OfficeBook officeBook)
+        public async Task<bool> AddBook(OfficeBook officeBook, GraphServiceClient graphClient)
         {
-            sharePointLists = await Sites.GetLists(GraphClient, siteId);
+            sharePointLists = await Sites.GetLists(graphClient, siteId);
 
             if (sharePointLists != null)
             {
-                var addbook = sharePointLists.Where(b => b.DisplayName.Contains("Books")).FirstOrDefault();
-                string _listId = addbook.Id;
+                var _officeBookList = sharePointLists.Where(b => b.DisplayName.Contains("Office Books")).FirstOrDefault();
+                string _listId = _officeBookList.Id;
 
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
@@ -62,9 +62,9 @@ namespace AssetTracking.Models
                 return false;
             }
         }
-        public async Task<bool> UpdateBook(OfficeBook officeBook)        
+        public async Task<bool> UpdateBook(OfficeBook officeBook, GraphServiceClient graphClient)        
         {              
-            sharePointLists = await Sites.GetLists(GraphClient, siteId);
+            sharePointLists = await Sites.GetLists(graphClient, siteId);
 
             if (sharePointLists != null)
             {
@@ -89,9 +89,9 @@ namespace AssetTracking.Models
                 return false;
             }
         }
-        public async Task<bool> DeleteBook(OfficeBook officeBook)
+        public async Task<bool> DeleteBook(OfficeBook officeBook, GraphServiceClient graphClient)
         {
-            sharePointLists = await Sites.GetLists(GraphClient, siteId);
+            sharePointLists = await Sites.GetLists(graphClient, siteId);
             string userItemId = officeBook. ItemId;
 
             if (sharePointLists != null)
