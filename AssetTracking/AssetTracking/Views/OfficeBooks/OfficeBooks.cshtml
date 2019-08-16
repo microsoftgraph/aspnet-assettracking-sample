@@ -1,5 +1,4 @@
 ﻿@using AssetTracking.Models;
-@model IEnumerable<OfficeBook>
 
 @{
     ViewData["Title"] = "OfficeBooks";
@@ -44,31 +43,10 @@
                     </tr>
                 </thead>
                 <!--Table head-->
-                <!--Table body-->
-                @*<tbody>
-                    @foreach (OfficeBook officeBook in Model)
-                    {
-                        <tr>
-                            <td style="display:none">@officeBook.ItemId</td>
-                            <td>@officeBook.ISBN</td>
-                            <td>@officeBook.Title </td>
-                            <td>@officeBook.Author</td>
-                            <td>@officeBook.BookDescription</td>
-                            <td>
-                                <a href="#" id="editing" onclick="UpdateOfficeBook(@officeBook.ItemId)"> Edit </a>|
-                                <a href="#" id="deleting" onclick="DeleteOfficeBook(@officeBook.ItemId)"> Delete </a>|
-                                <a asp-controller="OfficeBooks" onclick="ViewDetails(@officeBook.ItemId)" asp-action="GetBooks"> View </a>
-                            </td>
-
-                        </tr>
-                    }
-                </tbody>*@
-                <!--Table body-->
             </table>
             <!--Table-->
         </div>
     </div>
-
 </div>
 
 <div class="modal fade" id="EditBookForm" tabindex="-1" role="dialog" aria-labelledby="Edit"
@@ -87,7 +65,7 @@
             <!--Body-->
             <div class="modal-body mb-0">
                 <p style="font-size:16px;" id="warnMessage"></p>
-                <form>
+                <form id="formId">
                     <div class="md-form form-sm">
                         <input type="text" id="ItemId" name="ItemId" class="form-control" style="display:none">
                         <input type="text" id="ISBN" name="ISBN" class="form-control">
@@ -120,85 +98,3 @@
         <!--/.Content-->
     </div>
 </div>
-
-
-<div>
-</div>
-
-
-<div class="row"></div>
-<div class="row"></div>
-
-
-<!-- Table with panel -->
-<h5>Borrowed Books</h5>
-
-@*<div class="px-4">
-    <div class="table-wrapper">
-        <div class="table-responsive">
-            <!--Table-->
-            <table class="table table-hover mb-0" id="t_borrowed_books">
-
-                <!--Table head-->
-                <thead>
-                    <tr>
-                        <th class="th-lg">
-                            Book ISBN
-                        </th>
-                        <th class="th-lg">
-                            Book Title
-                        </th>
-                        <th class="th-lg">
-                            Author
-                        </th>
-                        <th class="th-lg">
-                            Borrowed By
-                        </th>
-                        <th class="th-lg">
-                            Date Borrowed
-                        </th>
-                        <th class="th-lg">
-                            Due Date
-                        </th>
-                        <th class="th-lg">
-                        </th>
-                    </tr>
-                </thead>
-                <!--Table head-->
-                <!--Table body-->
-                <tbody>
-                    <tr>
-                        <td>1234</td>
-                        <td>Cracking the coding Interview</td>
-                        <td>Otto</td>
-                        <td>Elinor Kaguongo</td>
-                        <td>1/7/2019</td>
-                        <td>19/7/2019</td>
-                        <td>
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookHistory"> View History </a>|
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View Book Details </a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>1234</td>
-                        <td>Professional C# 7 and .Net Core</td>
-                        <td>Paul</td>
-                        <td>Nicole Sigei</td>
-                        <td>3/7/2019</td>
-                        <td>19/7/2019</td>
-                        <td>
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookHistory"> View History </a> |
-                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View Book Details </a>
-                        </td>
-                    </tr>
-                </tbody>
-                <!--Table body-->
-            </table>
-            <!--Table-->
-        </div>
-    </div>
-
-</div>*@
-
-
