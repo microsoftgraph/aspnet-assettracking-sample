@@ -52,7 +52,7 @@ namespace AssetTracking.Models
                     { "Author0", officeBook.Author },
                     { "BookTitle", officeBook.BookDescription }
                 };
-                bool addofficebooks = await Sites.AddListItem(GraphClient, siteId,
+                bool addofficebooks = await Sites.AddListItem(graphClient, siteId,
                                                       _listId,
                                                       data);
                 return addofficebooks;
@@ -65,11 +65,13 @@ namespace AssetTracking.Models
         public async Task<bool> UpdateBook(OfficeBook officeBook, GraphServiceClient graphClient)        
         {              
             sharePointLists = await Sites.GetLists(graphClient, siteId);
+            string userItemId = officeBook.ItemId;
 
             if (sharePointLists != null)
             {
-                var addbook = sharePointLists.Where(b => b.DisplayName.Contains("Books")).FirstOrDefault();
+                var addbook = sharePointLists.Where(b => b.DisplayName.Contains("Office Books")).FirstOrDefault();
                 string _listId = addbook.Id;
+                string itemId = userItemId;
 
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
@@ -79,7 +81,7 @@ namespace AssetTracking.Models
                     { "Author0", officeBook.Author },
                     { "BookTitle", officeBook.BookDescription }
                 };
-                bool updatebook =  await Sites.UpdateListItem(GraphClient, siteId,
+                bool updatebook =  await Sites.UpdateListItem(graphClient, siteId,
                                                        _listId, itemId,
                                                        data);
                 return updatebook;
@@ -92,7 +94,7 @@ namespace AssetTracking.Models
         public async Task<bool> DeleteBook(OfficeBook officeBook, GraphServiceClient graphClient)
         {
             sharePointLists = await Sites.GetLists(graphClient, siteId);
-            string userItemId = officeBook. ItemId;
+            string userItemId = officeBook.ItemId;
 
             if (sharePointLists != null)
             {
@@ -101,7 +103,7 @@ namespace AssetTracking.Models
 
                 string itemId = userItemId;
 
-                bool deletebooks = await Sites.DeleteListItem(GraphClient, siteId,
+                bool deletebooks = await Sites.DeleteListItem(graphClient, siteId,
                                                       _listId, itemId);
                 return deletebooks;
             }
