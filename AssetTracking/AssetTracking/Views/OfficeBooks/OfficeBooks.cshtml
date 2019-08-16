@@ -1,0 +1,204 @@
+﻿@using AssetTracking.Models;
+@model IEnumerable<OfficeBook>
+
+@{
+    ViewData["Title"] = "OfficeBooks";
+}
+
+<h1>Office Books</h1>
+
+<div class="text-left">
+    <a href="#" class="btn btn-default btn-rounded my-3" onclick="AddOfficeBook()">
+        Add Office Book
+    </a>
+</div>
+
+<!-- Table with panel -->
+<h5>Available Books</h5>
+<div class="px-4">
+    <div class="table-wrapper">
+        <!--Table-->
+        <div class="table-responsive">
+            <table class="table table-hover mb-0" id="tableBooks">
+
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th class="th-lg" style="display:none">
+                            Book ID
+                        </th>
+                        <th class="th-lg">
+                            ISBN
+                        </th>
+                        <th class="th-lg">
+                            Book Title
+                        </th>
+                        <th class="th-lg">
+                            Author
+                        </th>
+                        <th class="th-lg">
+                            Description
+                        </th>
+                        <th class="th-lg">
+                        </th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                @*<tbody>
+                    @foreach (OfficeBook officeBook in Model)
+                    {
+                        <tr>
+                            <td style="display:none">@officeBook.ItemId</td>
+                            <td>@officeBook.ISBN</td>
+                            <td>@officeBook.Title </td>
+                            <td>@officeBook.Author</td>
+                            <td>@officeBook.BookDescription</td>
+                            <td>
+                                <a href="#" id="editing" onclick="UpdateOfficeBook(@officeBook.ItemId)"> Edit </a>|
+                                <a href="#" id="deleting" onclick="DeleteOfficeBook(@officeBook.ItemId)"> Delete </a>|
+                                <a asp-controller="OfficeBooks" onclick="ViewDetails(@officeBook.ItemId)" asp-action="GetBooks"> View </a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>*@
+                <!--Table body-->
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="EditBookForm" tabindex="-1" role="dialog" aria-labelledby="Edit"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> <span id="change"></span> Office Item</h4>     
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <p style="font-size:16px;" id="warnMessage"></p>
+                <form>
+                    <div class="md-form form-sm">
+                        <input type="text" id="ItemId" name="ItemId" class="form-control" style="display:none">
+                        <input type="text" id="ISBN" name="ISBN" class="form-control">
+                        <label for="form8" class="active">Book ISBN</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input type="text" id="Title" name="Title" class="form-control">
+                        <label for="form9" class="active">Book Title</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input type="text" id="Author" name="Author" class="form-control">
+                        <label for="form9" class="active">Book Author</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input type="text" id="BookDescription" name="BookDescription" class="form-control">
+                        <label for="form9" class="active">Description</label>
+                    </div>
+                    <div class="text-center mt-1-half">
+
+                        <button type="button" id="SubmitUpdateOfficeBook" class="btn btn-info mb-2 waves-effect waves-light">Update<i class="fas fa-send ml-1"></i></button>
+                        <button type="button" id="SubmitNewOfficeBook" class="btn btn-info mb-2 waves-effect waves-light">Add<i class="fas fa-send ml-1"></i></button>
+                        <button type="button" id="SubmitDeleteOfficeBook" class="btn btn-info mb-2 waves-effect waves-light">Delete<i class="fas fa-send ml-1"></i></button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+
+<div>
+</div>
+
+
+<div class="row"></div>
+<div class="row"></div>
+
+
+<!-- Table with panel -->
+<h5>Borrowed Books</h5>
+
+@*<div class="px-4">
+    <div class="table-wrapper">
+        <div class="table-responsive">
+            <!--Table-->
+            <table class="table table-hover mb-0" id="t_borrowed_books">
+
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th class="th-lg">
+                            Book ISBN
+                        </th>
+                        <th class="th-lg">
+                            Book Title
+                        </th>
+                        <th class="th-lg">
+                            Author
+                        </th>
+                        <th class="th-lg">
+                            Borrowed By
+                        </th>
+                        <th class="th-lg">
+                            Date Borrowed
+                        </th>
+                        <th class="th-lg">
+                            Due Date
+                        </th>
+                        <th class="th-lg">
+                        </th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr>
+                        <td>1234</td>
+                        <td>Cracking the coding Interview</td>
+                        <td>Otto</td>
+                        <td>Elinor Kaguongo</td>
+                        <td>1/7/2019</td>
+                        <td>19/7/2019</td>
+                        <td>
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookHistory"> View History </a>|
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View Book Details </a>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>1234</td>
+                        <td>Professional C# 7 and .Net Core</td>
+                        <td>Paul</td>
+                        <td>Nicole Sigei</td>
+                        <td>3/7/2019</td>
+                        <td>19/7/2019</td>
+                        <td>
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookHistory"> View History </a> |
+                            <a asp-controller="OfficeBooks" asp-action="ViewBookDetails"> View Book Details </a>
+                        </td>
+                    </tr>
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+</div>*@
+
+
