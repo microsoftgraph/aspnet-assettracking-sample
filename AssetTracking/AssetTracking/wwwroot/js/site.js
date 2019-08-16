@@ -163,6 +163,7 @@ function UpdateOfficeBook(ItemId) {
             $('#EditBookForm').modal();
         })
     });
+
 }
 function DeleteOfficeBook(ItemId) {
     $('#SubmitNewOfficeBook').hide();
