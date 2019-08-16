@@ -150,7 +150,6 @@ function UpdateOfficeBook(ItemId) {
     $('#SubmitDeleteOfficeBook').hide();
     $('#SubmitUpdateOfficeBook').show();
     $('#change').text('Edit');
-    $('#EditBookForm').reload();
     $.ajax({
         url: '/OfficeBooks/OfficeBooksGetbyId',
         data: { Id: ItemId },
