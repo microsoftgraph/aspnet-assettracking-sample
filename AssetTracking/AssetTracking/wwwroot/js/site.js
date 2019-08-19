@@ -3,10 +3,30 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('#t_items').DataTable({
+    $('#tableItems').DataTable({
         "columnDefs": [
             { "orderable": false, "targets": [-1, -2] }
-        ]
+        ],
+        "ajax": {
+            "url": "/OfficeItems/GetOfficeItems",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            {
+                "data": "OfficeItemID",
+                'visible': false
+            },
+            { "data": "Title" },
+            { "data": "SerialNo" },
+            { "data": "Description" },
+            {
+                "data": "OfficeItemID",
+                "render": function (data) {
+                    return '<a href="#" id="editing" onclick="UpdateOfficeItem(' + data + ')"> Edit </a>|<a href="#" id="deleting" onclick="DeleteOfficeItem(' + data + ')"> Delete </a>'
+                }
+            }
+        ]  
     });
     $('#t_borrowed_items').DataTable({
         "columnDefs": [
@@ -144,6 +164,101 @@ $(document).ready(function () {
             })
         });
     });
+    $("#SubmitNewOfficeItem").click(function () {
+        var itemId = $('#ItemID').val();
+        var serialNo = $('#SerialNo').val();
+        var itemName = $('#Title').val();
+        var description = $('#ItemDescription').val();
+        $.ajax({
+            type: 'POST',
+            url: '/OfficeItem/AddItem',
+            data: {
+                ItemId: itemId,
+                Title: itemName,
+                ResourceId: "1",
+                SerialNo: serialNo,
+                ItemDescription: description
+            },
+            error: function (xhr) {
+                alert('Error: ' + xhr.statusText);
+            },
+            success: (function (result) {
+                if (result) {
+                    alert("Item succesfully added");
+                    $('#EditItemForm').modal("hide");
+                    $('#tableItems').DataTable().ajax.reload();
+                }
+                else {
+                    alert("Unable to add item");
+                }
+            })
+        });
+
+    });
+
+    $("#SubmitUpdateOfficeItem").click(function () {
+
+        var itemId = $('#ItemID').val();
+        var serialNo = $('#SerialNo').val();
+        var itemName = $('#Title').val();
+        var description = $('#ItemDescription').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/OfficeItems/UpdateItem',
+            data: {
+                ItemId: itemId,
+                Title: itemName,
+                ResourceId: "1",
+                SerialNo: serialNo,
+                ItemDescription: description
+            },
+            error: function (xhr) {
+                alert('Error: ' + xhr.statusText);
+            },
+            success: (function (result) {
+                if (result) {
+                    alert("Item succesfully updated");
+                    $('#EditItemForm').modal("hide");
+                    $('#tableItems').DataTable().ajax.reload();
+                }
+                else {
+                    alert("Unable to update item");
+                }
+            })
+        });
+    });
+    $("#SubmitDeleteOfficeItem").click(function () {
+        var itemId = $('#ItemID').val();
+        var serialNo = $('#SerialNo').val();
+        var itemName = $('#Title').val();
+        var description = $('#ItemDescription').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/OfficeItem/DeleteItem',
+            data: {
+                ItemId: itemId,
+                Title: itemName,
+                ResourceId: "1",
+                SerialNo: serialNo,
+                ItemDescription: description
+            },
+            error: function (xhr) {
+                alert('Error: ' + xhr.statusText);
+            },
+            success: (function (result) {
+                if (result) {
+                    alert("Item succesfully deleted");
+                    $('#EditItemForm').modal("hide");
+                    $('#tableItems').DataTable().ajax.reload();
+                }
+                else {
+                    alert("Unable to delete item");
+                }
+            })
+        });
+    });
 });
 function UpdateOfficeBook(ItemId) {
     $('#SubmitNewOfficeBook').hide();
@@ -190,5 +305,50 @@ function AddOfficeBook() {
     $('#SubmitNewOfficeBook').show();
     $('#SubmitUpdateOfficeBook').hide();
     $('#SubmitDeleteOfficeBook').hide();
+}
+
+function UpdateOfficeItem(ItemId) {
+    $('#SubmitNewOfficeItem').hide();
+    $('#SubmitDeleteOfficeItem').hide();
+    $('#SubmitUpdateOfficeItem').show();
+    $('#itemChange').text('Edit');
+    $.ajax({
+        url: '/OfficeItems/GetItemsById',
+        data: { Id: ItemId },
+        success: (function (result) {
+            $('#ItemID').val(result.OfficeItemID);
+            $('#SerialNo').val(result.SerialNo);
+            $('#Title').val(result.Title);
+            $('#ItemDescription').val(result.Description);
+            $('#EditItemForm').modal();
+        })
+    });
+
+}
+function DeleteOfficeItem(ItemId) {
+    $('#SubmitNewOfficeItem').hide();
+    $('#SubmitUpdateOfficeItem').hide();
+    $('#SubmitDeleteOfficeItem').show();
+    $('#itemChange').text('Delete');
+    $('#warnMessage').text('Are you sure you want to delete this item?');
+    $.ajax({
+        url: '/OfficeItems/GetItemsById',
+        data: { Id: ItemId },
+        success: (function (result) {
+            $('#ItemID').val(result.OfficeItemID);
+            $('#SerialNo').val(result.SerialNo).prop('disabled', true);
+            $('#Title').val(result.Title).prop('disabled', true);
+            $('#ItemDescription').val(result.Description).prop('disabled', true);
+            $('#EditItemForm').modal();
+        })
+    });
+}
+
+function AddOfficeItem() {
+    $('#EditItemForm').modal();
+    $('#itemChange').text('Add');
+    $('#SubmitNewOfficeItem').show();
+    $('#SubmitUpdateOfficeItem').hide();
+    $('#SubmitDeleteOfficeItem').hide();
 }
 
