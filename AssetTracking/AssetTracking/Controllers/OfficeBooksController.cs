@@ -9,7 +9,6 @@ using Microsoft.Graph;
 
 namespace AssetTracking.Controllers
 {
-    //[Route("[controller]")]
     public class OfficeBooksController : Controller
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
@@ -22,7 +21,6 @@ namespace AssetTracking.Controllers
             _officeBookRepository = officeBookRepository;
         }
 
-        //[HttpGet]
         public ActionResult OfficeBooks()
         {
             
@@ -63,7 +61,6 @@ namespace AssetTracking.Controllers
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
                 bool result = await _officeBookRepository.AddBook(officeBook, _graphClient);
-
                 return Json(new { IsSuccess = result });
             }
             else
