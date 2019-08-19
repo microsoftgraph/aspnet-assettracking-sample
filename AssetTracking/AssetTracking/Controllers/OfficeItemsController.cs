@@ -1,65 +1,102 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetTracking.Helpers;
 using AssetTracking.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Graph;
 
 namespace AssetTracking.Controllers
 {
-    [Route("[controller]")]
     public class OfficeItemsController : Controller
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
         public IOfficeItemRepository _officeItemRepository;
+        private GraphServiceClient _graphClient;
 
-        public OfficeItemsController( IGraphSdkHelper graphSdkHelper)
+        public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository)
         {
             _graphSdkHelper = graphSdkHelper;
+            _officeItemRepository = officeItemRepository;
         }
-        public GraphServiceClient graphserviceClient { get; private set; }
-        [HttpGet]
-        public IActionResult OfficeItems()
+
+        public ActionResult OfficeItems()
+        {
+            return View();
+        }
+
+
+        public async Task<JsonResult> GetOfficeItems()
         {
             if (User.Identity.IsAuthenticated)
             {
-                graphserviceClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                var user = graphserviceClient.Me.Request().GetAsync();
+                _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient);
+                return Json(new { data = officeItemList });
             }
-            return View();
-        }
-       
-        public async Task<IActionResult> GetItems()
-        {
-            List<OfficeItem> officeItem = await _officeItemRepository.GetItems();
-            ViewBag.List = _officeItemRepository;
-            return View();
+            else
+            {
+                return Json(new { IsSuccess = false });
+            }
         }
 
-        [Route("/AddItems")]
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public async Task<bool> AddItem(OfficeItem officeItem)
+
+        public async Task<JsonResult> GetItemsById(string Id)
         {
-            bool result = await _officeItemRepository.AddItem(officeItem);
-            return result;
+            if (User.Identity.IsAuthenticated)
+            {
+                _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient);
+                OfficeItem officeItem = officeItemList.Where(d => d.ItemId == Id).FirstOrDefault();
+                return Json(officeItem);
+            }
+            return Json(null);
         }
 
-        [Route("/UpdateItems")]
+
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public async Task<bool> UpdateItem(OfficeItem officeItem)
+        public async Task<JsonResult> AddItem(OfficeItem officeItem)
         {
-            bool result = await _officeItemRepository.UpdateItem(officeItem);
-            return result;
+            if (User.Identity.IsAuthenticated)
+            {
+                _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+                bool result = await _officeItemRepository.AddItem(officeItem, _graphClient);
+                return Json(new { IsSuccess = result });
+            }
+            else
+            {
+                return Json(new { IsSuccess = false });
+            }
         }
-        [Route("/DeleteItems")]
-        [HttpPost]
-        public async Task<bool> DeleteItem(OfficeItem officeItem)
+
+        public async Task<JsonResult> UpdateItem(OfficeItem officeItem)
         {
-            bool result = await _officeItemRepository.DeleteItem(officeItem);
-            return result;
+            if (User.Identity.IsAuthenticated)
+            {
+                _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+                bool result = await _officeItemRepository.UpdateItem(officeItem, _graphClient);
+                return Json(new { IsSuccess = result });
+            }
+            else
+            {
+                return Json(new { IsSuccess = false });
+            }
+        }
+
+        public async Task<JsonResult> DeleteItem(OfficeItem officeItem)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+                bool result = await _officeItemRepository.DeleteItem(officeItem, _graphClient);
+                return Json(new { IsSuccess = result });
+            }
+            else
+            {
+                return Json(new { IsSuccess = false });
+            }
         }
     }
 }
