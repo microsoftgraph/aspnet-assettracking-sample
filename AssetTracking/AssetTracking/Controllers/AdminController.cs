@@ -34,13 +34,6 @@ namespace AssetTracking.Controllers
 
                 GraphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
                 ViewData["Response"] = await GraphService.GetUserJson(GraphClient, email, HttpContext);
-
-                /***  For Test Purpose  Pending implementation**/
-                // To Test Sharepoint Sites
-                var lists = await Sites.GetLists(GraphClient, "m365b267815.sharepoint.com,6e1261a1-6d03-432a-95c0-e1c7705aef5f,f43d258c-ece0-476a-a1c0-018d359817d5");
-                if (lists != null)
-                    ViewBag.List = lists.CurrentPage;
-                /**************************************/
             }
 
             return View();
