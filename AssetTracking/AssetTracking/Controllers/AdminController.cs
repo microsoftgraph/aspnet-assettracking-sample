@@ -11,8 +11,8 @@ using System.Security.Claims;
 
 namespace AssetTracking.Controllers
 { 
-    public class AdminController : Controller
-    {
+   public class AdminController : Controller
+   {
         private readonly IConfiguration _configuration;
         private readonly IHostingEnvironment _env;
         private readonly IGraphSdkHelper _graphSdkHelper;
@@ -23,7 +23,6 @@ namespace AssetTracking.Controllers
             _graphSdkHelper = graphSdkHelper;
         }
         public GraphServiceClient GraphClient { get; private set; }
-
         [Authorize]
         public async Task<IActionResult> Index(string email)
         {
@@ -38,12 +37,10 @@ namespace AssetTracking.Controllers
 
             return View();
         }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
         public IActionResult OfficeItems()
         {
             return View();
@@ -53,7 +50,6 @@ namespace AssetTracking.Controllers
             return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-
         public ActionResult Error(string message, string debug)
         {
             return RedirectToAction("Index");
