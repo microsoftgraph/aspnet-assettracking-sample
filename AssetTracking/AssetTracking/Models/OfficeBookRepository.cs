@@ -8,40 +8,41 @@ namespace AssetTracking.Models
 {
     public class OfficeBookRepository : IOfficeBookRepository
     {
-        private readonly string siteId = "m365b267815.sharepoint.com,6e1261a1-6d03-432a-95c0-e1c7705aef5f,f43d258c-ece0-476a-a1c0-018d359817d5";
+        private string SiteId { get;set; }
         private ISiteListsCollectionPage sharePointLists;
-        private readonly string itemId = null;
-        public GraphServiceClient GraphClient { get; private set; }
+        private const string officeBooksDisplayName = "OfficeBooks";
+        //Gets Office Books
         public async Task<List<OfficeBook>> GetBooks(GraphServiceClient graphClient)
         {
-            sharePointLists = await Sites.GetLists(graphClient, siteId);
+            sharePointLists = await Sites.GetLists(graphClient, SiteId);
             List<OfficeBook> _officeBooksDirectoryList = new List<OfficeBook>();
 
             if (sharePointLists != null)
             {
-                var _officeBookList = sharePointLists.Where(x => x.DisplayName.Contains("Office Books")).FirstOrDefault();
+                var _officeBookList = sharePointLists.Where(x => x.DisplayName.Contains(officeBooksDisplayName)).FirstOrDefault();
                 var _listId = _officeBookList.Id;
-                var _officeBookItems = await GetListItems(graphClient, siteId, _listId);
+                var _officeBookItems = await GetListItems(graphClient, SiteId, _listId);
 
                 foreach (var item in _officeBookItems)
                 {
-                    var resourceList = item.Fields.AdditionalData;
-                    var jsonString = JsonConvert.SerializeObject(resourceList);
+                    var _resourceList = item.Fields.AdditionalData;
+                    var _jsonString = JsonConvert.SerializeObject(_resourceList);
 
-                    var officeResource = JsonConvert.DeserializeObject<OfficeBook>(jsonString);
-                    officeResource.ItemId = item.Id;
-                    _officeBooksDirectoryList.Add(officeResource);
+                    var _officeResource = JsonConvert.DeserializeObject<OfficeBook>(_jsonString);
+                    _officeResource.ItemId = item.Id;
+                    _officeBooksDirectoryList.Add(_officeResource);
                 }
             }
             return _officeBooksDirectoryList;
         }
+        //Adds Office Book
         public async Task<bool> AddBook(OfficeBook officeBook, GraphServiceClient graphClient)
         {
-            sharePointLists = await Sites.GetLists(graphClient, siteId);
+            sharePointLists = await Sites.GetLists(graphClient, SiteId);
 
             if (sharePointLists != null)
             {
-                var _officeBookList = sharePointLists.Where(b => b.DisplayName.Contains("Office Books")).FirstOrDefault();
+                var _officeBookList = sharePointLists.Where(b => b.DisplayName.Contains(officeBooksDisplayName)).FirstOrDefault();
                 string _listId = _officeBookList.Id;
 
                 IDictionary<string, object> data = new Dictionary<string, object>
@@ -50,28 +51,29 @@ namespace AssetTracking.Models
                     { "Title", officeBook.Title },
                     { "ISBN", officeBook.ISBN },
                     { "Author0", officeBook.Author },
-                    { "BookTitle", officeBook.BookDescription }
+                    { "BookTitle", officeBook.Description }
                 };
-                bool addofficebooks = await Sites.AddListItem(graphClient, siteId,
+                bool _addofficebooks = await Sites.AddListItem(graphClient, SiteId,
                                                       _listId,
                                                       data);
-                return addofficebooks;
+                return _addofficebooks;
             }
             else
             {
                 return false;
             }
         }
+        //Update Office Books
         public async Task<bool> UpdateBook(OfficeBook officeBook, GraphServiceClient graphClient)        
         {              
-            sharePointLists = await Sites.GetLists(graphClient, siteId);
+            sharePointLists = await Sites.GetLists(graphClient, SiteId);
             string userItemId = officeBook.ItemId;
 
             if (sharePointLists != null)
             {
-                var addbook = sharePointLists.Where(b => b.DisplayName.Contains("Office Books")).FirstOrDefault();
-                string _listId = addbook.Id;
-                string itemId = userItemId;
+                var _addbook = sharePointLists.Where(b => b.DisplayName.Contains(officeBooksDisplayName)).FirstOrDefault();
+                string _listId = _addbook.Id;
+                string _itemId = userItemId;
 
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
@@ -79,33 +81,34 @@ namespace AssetTracking.Models
                     { "Title", officeBook.Title },
                     { "ISBN", officeBook.ISBN },
                     { "Author0", officeBook.Author },
-                    { "BookTitle", officeBook.BookDescription }
+                    { "BookTitle", officeBook.Description }
                 };
-                bool updatebook =  await Sites.UpdateListItem(graphClient, siteId,
-                                                       _listId, itemId,
+                bool _updatebook =  await Sites.UpdateListItem(graphClient, SiteId,
+                                                       _listId, _itemId,
                                                        data);
-                return updatebook;
+                return _updatebook;
             }
             else
             {
                 return false;
             }
         }
+        //  Deletes Office Book
         public async Task<bool> DeleteBook(OfficeBook officeBook, GraphServiceClient graphClient)
         {
-            sharePointLists = await Sites.GetLists(graphClient, siteId);
-            string userItemId = officeBook.ItemId;
+            sharePointLists = await Sites.GetLists(graphClient, SiteId);
+            string _userItemId = officeBook.ItemId;
 
             if (sharePointLists != null)
             {
-                var addbook = sharePointLists.Where(b => b.DisplayName.Contains("Office Books")).FirstOrDefault();
-                string _listId = addbook.Id;
+                var _addbook = sharePointLists.Where(b => b.DisplayName.Contains(officeBooksDisplayName)).FirstOrDefault();
+                string _listId = _addbook.Id;
 
-                string itemId = userItemId;
+                string _itemId = _userItemId;
 
-                bool deletebooks = await Sites.DeleteListItem(graphClient, siteId,
-                                                      _listId, itemId);
-                return deletebooks;
+                bool _deletebooks = await Sites.DeleteListItem(graphClient, SiteId,
+                                                      _listId, _itemId);
+                return _deletebooks;
             }
             else
             {
