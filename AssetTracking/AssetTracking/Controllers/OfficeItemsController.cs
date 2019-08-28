@@ -4,8 +4,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetTracking.Helpers;
 using AssetTracking.Models;
-using Microsoft.AspNetCore.Authorization;
+using AssetTracking.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
 
 namespace AssetTracking.Controllers
@@ -13,13 +14,14 @@ namespace AssetTracking.Controllers
     public class OfficeItemsController : Controller
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
-        public IOfficeItemRepository _officeItemRepository;
         private GraphServiceClient _graphClient;
-
-        public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository)
+        public IOfficeItemRepository _officeItemRepository;
+        public string _siteId;
+        public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository, IConfiguration configuration)
         {
             _graphSdkHelper = graphSdkHelper;
             _officeItemRepository = officeItemRepository;
+            _siteId = configuration["SiteId"];
         }
 
         public ActionResult OfficeItems()
