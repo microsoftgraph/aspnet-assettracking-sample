@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AssetTracking.Repositories
+namespace AssetTracking.Interfaces
 {
     public interface ISites
     {
