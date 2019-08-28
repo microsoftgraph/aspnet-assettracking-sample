@@ -14,9 +14,9 @@ namespace AssetTracking.Controllers
     public class OfficeBooksController : Controller
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
-        public IOfficeBookRepository _officeBookRepository;
+        private IOfficeBookRepository _officeBookRepository;
         private GraphServiceClient _graphClient;
-        public string _siteId;
+        private readonly string _siteId;
 
         public OfficeBooksController(IGraphSdkHelper graphSdkHelper, IOfficeBookRepository officeBookRepository, IConfiguration configuration)
         {

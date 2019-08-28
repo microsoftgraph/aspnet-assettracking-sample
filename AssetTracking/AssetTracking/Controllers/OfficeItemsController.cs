@@ -15,8 +15,8 @@ namespace AssetTracking.Controllers
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
         private GraphServiceClient _graphClient;
-        public IOfficeItemRepository _officeItemRepository;
-        public string _siteId;
+        private IOfficeItemRepository _officeItemRepository;
+        private readonly string _siteId;
         public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository, IConfiguration configuration)
         {
             _graphSdkHelper = graphSdkHelper;
