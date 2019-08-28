@@ -18,7 +18,7 @@ namespace AssetTracking.Repositories
             _sites = new Sites();
             _sharePointLists = new SiteListsCollectionPage();
         }
-        public async Task<List<OfficeItem>> GetItems(GraphServiceClient graphClient)
+        public async Task<List<OfficeItem>> GetItems(GraphServiceClient graphClient, string siteId)
         {
             _sharePointLists = await _sites.GetLists(graphClient, _siteId);
             List<OfficeItem> officeItemDirectoryList = new List<OfficeItem>();
@@ -39,7 +39,7 @@ namespace AssetTracking.Repositories
             }
             return officeItemDirectoryList;
         }
-        public async Task<bool> AddItem(OfficeItem officeItem, GraphServiceClient graphClient)
+        public async Task<bool> AddItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId)
         {
             _sharePointLists = await _sites.GetLists(graphClient, _siteId);
             if (_sharePointLists != null)
@@ -64,7 +64,7 @@ namespace AssetTracking.Repositories
                 return false;
             }
         }
-        public async Task<bool> UpdateItem(OfficeItem officeItem, GraphServiceClient graphClient)
+        public async Task<bool> UpdateItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId)
         {
             _sharePointLists = await _sites.GetLists(graphClient, _siteId);
             string userItemId = officeItem.ItemId;
@@ -94,7 +94,7 @@ namespace AssetTracking.Repositories
                 return false;
             }
         }
-        public async Task<bool> DeleteItem(OfficeItem officeItem, GraphServiceClient graphClient)
+        public async Task<bool> DeleteItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId)
         {
             _sharePointLists = await _sites.GetLists(graphClient, _siteId);
             string userItemId = officeItem.ItemId;

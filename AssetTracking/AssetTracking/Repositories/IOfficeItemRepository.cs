@@ -7,9 +7,9 @@ namespace AssetTracking.Repositories
 {
     public interface IOfficeItemRepository
     {
-        Task<List<OfficeItem>> GetItems(GraphServiceClient _graphClient);
-        Task<bool> AddItem(OfficeItem officeItem, GraphServiceClient graphClient);
-        Task<bool> UpdateItem(OfficeItem officeItem, GraphServiceClient graphClient);
-        Task<bool> DeleteItem(OfficeItem officeItem, GraphServiceClient graphClient);
+        Task<List<OfficeItem>> GetItems(GraphServiceClient _graphClient, string siteId);
+        Task<bool> AddItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId);
+        Task<bool> UpdateItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId);
+        Task<bool> DeleteItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId);
     }
 }
