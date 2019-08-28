@@ -1,8 +1,9 @@
-﻿using Microsoft.Graph;
+﻿using AssetTracking.Models;
+using Microsoft.Graph;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AssetTracking.Models
+namespace AssetTracking.Repositories
 {
     public interface IOfficeItemRepository
     {
