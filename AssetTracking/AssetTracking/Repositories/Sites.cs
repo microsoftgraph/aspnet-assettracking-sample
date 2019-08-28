@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AssetTracking.Interfaces;
 using Microsoft.Graph;
 
 namespace AssetTracking.Repositories
@@ -16,7 +17,7 @@ namespace AssetTracking.Repositories
                                 .Lists.Request().GetAsync();
                 return result;
             }
-            catch (ServiceException e)
+            catch 
             {
                 return null;
             }
@@ -51,9 +52,8 @@ namespace AssetTracking.Repositories
                                .AddAsync(listItem);
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.Message);
                 return false;
             }
         }
@@ -74,7 +74,7 @@ namespace AssetTracking.Repositories
                                 .UpdateAsync(fieldValueSet);
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -92,7 +92,7 @@ namespace AssetTracking.Repositories
                                 .DeleteAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
                 return false;
             }
