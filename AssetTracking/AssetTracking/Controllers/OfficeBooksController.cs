@@ -3,8 +3,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetTracking.Helpers;
+using AssetTracking.Interfaces;
 using AssetTracking.Models;
-using AssetTracking.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
@@ -17,20 +17,17 @@ namespace AssetTracking.Controllers
         private IOfficeBookRepository _officeBookRepository;
         private GraphServiceClient _graphClient;
         private readonly string _siteId;
-
         public OfficeBooksController(IGraphSdkHelper graphSdkHelper, IOfficeBookRepository officeBookRepository, IConfiguration configuration)
         {
             _graphSdkHelper = graphSdkHelper;
             _officeBookRepository = officeBookRepository;
             _siteId = configuration["SiteId"];
         }
-
         public ActionResult OfficeBooks()
         {
             
             return View();
         }
-
         public async Task<JsonResult> OfficeBooksGet()
         {
             if (User.Identity.IsAuthenticated)
@@ -45,7 +42,6 @@ namespace AssetTracking.Controllers
                 return Json(new { IsSuccess = false });
             }
         }
-
         public async Task<ActionResult> OfficeBooksGetbyId(string Id)
         {
             if (User.Identity.IsAuthenticated)
@@ -57,7 +53,6 @@ namespace AssetTracking.Controllers
             }
             return Json(null);
         }
-
         [HttpPost]
         public async Task<JsonResult> AddBook(OfficeBook officeBook)
         {
@@ -72,7 +67,6 @@ namespace AssetTracking.Controllers
                 return Json(new { IsSuccess = false });
             }
         }
-
         public async Task<JsonResult> UpdateBook(OfficeBook officeBook)
         {
             if (User.Identity.IsAuthenticated)
@@ -86,7 +80,6 @@ namespace AssetTracking.Controllers
                 return Json(new { IsSuccess = false });
             }
         }
-
         public async Task<JsonResult> DeleteBook(OfficeBook officeBook)
         {
             if (User.Identity.IsAuthenticated)

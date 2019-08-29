@@ -3,8 +3,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetTracking.Helpers;
+using AssetTracking.Interfaces;
 using AssetTracking.Models;
-using AssetTracking.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
@@ -16,21 +16,17 @@ namespace AssetTracking.Controllers
         private readonly IGraphSdkHelper _graphSdkHelper;
         private GraphServiceClient _graphClient;
         private IOfficeItemRepository _officeItemRepository;
-        private readonly string _siteId;
-        
+        private readonly string _siteId;        
         public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository, IConfiguration configuration)
         {
             _graphSdkHelper = graphSdkHelper;
             _officeItemRepository = officeItemRepository;
             _siteId = configuration["SiteId"];
         }
-
         public ActionResult OfficeItems()
         {
             return View();
         }
-
-
         public async Task<JsonResult> GetOfficeItems()
         {
             if (User.Identity.IsAuthenticated)
@@ -44,8 +40,6 @@ namespace AssetTracking.Controllers
                 return Json(new { IsSuccess = false });
             }
         }
-
-
         public async Task<JsonResult> GetItemsById(string Id)
         {
             if (User.Identity.IsAuthenticated)
@@ -57,8 +51,6 @@ namespace AssetTracking.Controllers
             }
             return Json(null);
         }
-
-
         [HttpPost]
         public async Task<JsonResult> AddItem(OfficeItem officeItem)
         {
@@ -73,7 +65,6 @@ namespace AssetTracking.Controllers
                 return Json(new { IsSuccess = false });
             }
         }
-
         public async Task<JsonResult> UpdateItem(OfficeItem officeItem)
         {
             if (User.Identity.IsAuthenticated)
@@ -87,7 +78,6 @@ namespace AssetTracking.Controllers
                 return Json(new { IsSuccess = false });
             }
         }
-
         public async Task<JsonResult> DeleteItem(OfficeItem officeItem)
         {
             if (User.Identity.IsAuthenticated)

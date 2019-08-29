@@ -1,4 +1,5 @@
-﻿using AssetTracking.Models;
+﻿using AssetTracking.Interfaces;
+using AssetTracking.Models;
 using Microsoft.Graph;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -20,13 +21,13 @@ namespace AssetTracking.Repositories
         }
         public async Task<List<OfficeBook>> GetBooks(GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, _siteId);
+            _sharePointLists = await _sites.GetLists(graphClient, siteId);
             List<OfficeBook> officeBooksDirectoryList = new List<OfficeBook>();
             if (_sharePointLists != null)
             {
                 List officeBookList = _sharePointLists.Where(x => x.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
                 string listId = officeBookList.Id;
-                IListItemsCollectionPage officeBookItems = await GetListItems(graphClient, _siteId, listId);
+                IListItemsCollectionPage officeBookItems = await GetListItems(graphClient, siteId, listId);
                 foreach (ListItem item in officeBookItems)
                 {
                     IDictionary<string,object> resourceList = item.Fields.AdditionalData;

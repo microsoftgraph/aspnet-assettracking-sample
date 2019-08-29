@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssetTracking.Interfaces;
 using Microsoft.Graph;
@@ -8,12 +7,12 @@ namespace AssetTracking.Repositories
 {
     public class Sites : ISites
     {
-        public async Task<ISiteListsCollectionPage> GetLists(GraphServiceClient graphClient, string _siteId)
+        public async Task<ISiteListsCollectionPage> GetLists(GraphServiceClient graphClient, string siteId)
         {
             try
             {
                 var result = await graphClient
-                                .Sites[_siteId]
+                                .Sites[siteId]
                                 .Lists.Request().GetAsync();
                 return result;
             }
@@ -22,17 +21,17 @@ namespace AssetTracking.Repositories
                 return null;
             }
         }
-        public async Task<IListItemsCollectionPage> GetListItems(GraphServiceClient graphClient, string _siteId, string listId)
+        public async Task<IListItemsCollectionPage> GetListItems(GraphServiceClient graphClient, string siteId, string listId)
         {
             IListItemsCollectionPage listItems = await graphClient
-                            .Sites[_siteId]
+                            .Sites[siteId]
                             .Lists[listId]
                             .Items
                             .Request().Expand("fields")
                             .GetAsync();
             return listItems;
         }
-        public async Task<bool> AddListItem(GraphServiceClient graphClient, string _siteId, string listId, IDictionary<string, object> data)
+        public async Task<bool> AddListItem(GraphServiceClient graphClient, string siteId, string listId, IDictionary<string, object> data)
         {
             var listItem = new ListItem
             {
@@ -45,7 +44,7 @@ namespace AssetTracking.Repositories
             {
                 await graphClient
 
-                                    .Sites[_siteId]
+                                    .Sites[siteId]
                                     .Lists[listId]
                                     .Items
                                .Request()
@@ -57,7 +56,7 @@ namespace AssetTracking.Repositories
                 return false;
             }
         }
-        public  async Task<bool> UpdateListItem(GraphServiceClient graphClient, string _siteId, string listId, string itemId, IDictionary<string, object> data)
+        public  async Task<bool> UpdateListItem(GraphServiceClient graphClient, string siteId, string listId, string itemId, IDictionary<string, object> data)
         {
             var fieldValueSet = new FieldValueSet
             {
@@ -66,7 +65,7 @@ namespace AssetTracking.Repositories
             try
             {
                 await graphClient
-                                .Sites[_siteId]
+                                .Sites[siteId]
                                 .Lists[listId]
                                 .Items[itemId]
                                 .Fields
@@ -79,13 +78,13 @@ namespace AssetTracking.Repositories
                 return false;
             }
         }
-        public async Task<bool> DeleteListItem(GraphServiceClient graphClient, string _siteId, string listId, string itemId)
+        public async Task<bool> DeleteListItem(GraphServiceClient graphClient, string siteId, string listId, string itemId)
         { 
             try
             {
                 await graphClient
 
-                                .Sites[_siteId]
+                                .Sites[siteId]
                                 .Lists[listId]
                                 .Items[itemId]
                                 .Request()
