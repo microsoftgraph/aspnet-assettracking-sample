@@ -1,5 +1,6 @@
 ﻿using AssetTracking.Extensions;
 using AssetTracking.Helpers;
+using AssetTracking.Interfaces;
 using AssetTracking.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;

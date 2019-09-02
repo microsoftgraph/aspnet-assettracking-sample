@@ -13,7 +13,6 @@ namespace AssetTracking.Repositories
         private const string OfficeItemsDisplayName = "OfficeItems";
         private ISiteListsCollectionPage _sharePointLists;
         private readonly Sites _sites;
-        private readonly string _siteId;
         public OfficeItemRepository()
         {
             _sites = new Sites();
@@ -21,13 +20,13 @@ namespace AssetTracking.Repositories
         }
         public async Task<List<OfficeItem>> GetItems(GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, _siteId);
+            _sharePointLists = await _sites.GetLists(graphClient, siteId);
             List<OfficeItem> officeItemDirectoryList = new List<OfficeItem>();
             if (_sharePointLists != null)
             {
                 List officeItemList = _sharePointLists.Where(x => x.DisplayName.Contains(OfficeItemsDisplayName)).FirstOrDefault();
                 string listId = officeItemList.Id;
-                IListItemsCollectionPage _officeItems = await _sites.GetListItems(graphClient, _siteId, listId);
+                IListItemsCollectionPage _officeItems = await _sites.GetListItems(graphClient, siteId, listId);
                 foreach (ListItem item in _officeItems)
                 {
                     IDictionary<string, object> resourceList = item.Fields.AdditionalData;
@@ -42,7 +41,7 @@ namespace AssetTracking.Repositories
         }
         public async Task<bool> AddItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, _siteId);
+            _sharePointLists = await _sites.GetLists(graphClient, siteId);
             if (_sharePointLists != null)
             {
                 List addItem = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeItemsDisplayName)).FirstOrDefault();
@@ -55,7 +54,7 @@ namespace AssetTracking.Repositories
                     {"SerialNo", officeItem.SerialNo },
                     {"Description", officeItem.ItemDescription }
                 };
-                bool addOfficeItem = await _sites.AddListItem(graphClient, _siteId,
+                bool addOfficeItem = await _sites.AddListItem(graphClient, siteId,
                                                       listId,
                                                       data);
                 return addOfficeItem;
@@ -67,7 +66,7 @@ namespace AssetTracking.Repositories
         }
         public async Task<bool> UpdateItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, _siteId);
+            _sharePointLists = await _sites.GetLists(graphClient, siteId);
             string userItemId = officeItem.ItemId;
             if (_sharePointLists != null)
             {
@@ -85,7 +84,7 @@ namespace AssetTracking.Repositories
                     {"SerialNo", officeItem.SerialNo },
                     {"Description", officeItem.ItemDescription }
                 };
-                bool updateBook = await _sites.UpdateListItem(graphClient, _siteId,
+                bool updateBook = await _sites.UpdateListItem(graphClient, siteId,
                                                       listId, itemId,
                                                       data);
                 return updateBook;
@@ -97,7 +96,7 @@ namespace AssetTracking.Repositories
         }
         public async Task<bool> DeleteItem(OfficeItem officeItem, GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, _siteId);
+            _sharePointLists = await _sites.GetLists(graphClient, siteId);
             string userItemId = officeItem.ItemId;
             if (_sharePointLists != null)
             {
@@ -105,7 +104,7 @@ namespace AssetTracking.Repositories
                 string listId = addItem.Id;
                 string itemId = userItemId;
 
-                bool deleteBook = await _sites.DeleteListItem(graphClient, _siteId,
+                bool deleteBook = await _sites.DeleteListItem(graphClient, siteId,
                                                       listId, itemId);
                 return deleteBook;
             }

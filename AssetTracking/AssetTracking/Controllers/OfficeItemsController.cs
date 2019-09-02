@@ -15,13 +15,13 @@ namespace AssetTracking.Controllers
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
         private GraphServiceClient _graphClient;
-        private IOfficeItemRepository _officeItemRepository;
-        private readonly string _siteId;        
+        private readonly IOfficeItemRepository _officeItemRepository;
+        private readonly string siteId;        
         public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository, IConfiguration configuration)
         {
             _graphSdkHelper = graphSdkHelper;
             _officeItemRepository = officeItemRepository;
-            _siteId = configuration["SiteId"];
+            siteId = configuration["SiteId"];
         }
         public ActionResult OfficeItems()
         {
@@ -32,7 +32,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient,_siteId);
+                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient,siteId);
                 return Json(new { data = officeItemList });
             }
             else
@@ -45,7 +45,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient, _siteId);
+                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient, siteId);
                 OfficeItem officeItem = officeItemList.Where(d => d.ItemId == Id).FirstOrDefault();
                 return Json(officeItem);
             }
@@ -57,7 +57,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeItemRepository.AddItem(officeItem, _graphClient, _siteId);
+                bool result = await _officeItemRepository.AddItem(officeItem, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
@@ -70,7 +70,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeItemRepository.UpdateItem(officeItem, _graphClient, _siteId);
+                bool result = await _officeItemRepository.UpdateItem(officeItem, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
@@ -83,7 +83,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeItemRepository.DeleteItem(officeItem, _graphClient, _siteId);
+                bool result = await _officeItemRepository.DeleteItem(officeItem, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
