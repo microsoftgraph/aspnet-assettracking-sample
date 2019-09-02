@@ -45,8 +45,8 @@ namespace AssetTracking.Repositories
             _sharePointLists = await _sites.GetLists(graphClient, _siteId);
             if (_sharePointLists != null)
             {
-                List additem = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeItemsDisplayName)).FirstOrDefault();
-                string listId = additem.Id;
+                List addItem = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeItemsDisplayName)).FirstOrDefault();
+                string listId = addItem.Id;
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
                     {"OfficeItemID", officeItem.ItemId},
@@ -55,10 +55,10 @@ namespace AssetTracking.Repositories
                     {"SerialNo", officeItem.SerialNo },
                     {"Description", officeItem.ItemDescription }
                 };
-                bool addofficeitem = await _sites.AddListItem(graphClient, _siteId,
+                bool addOfficeItem = await _sites.AddListItem(graphClient, _siteId,
                                                       listId,
                                                       data);
-                return addofficeitem;
+                return addOfficeItem;
             }
             else
             {
@@ -85,10 +85,10 @@ namespace AssetTracking.Repositories
                     {"SerialNo", officeItem.SerialNo },
                     {"Description", officeItem.ItemDescription }
                 };
-                bool updatebook = await _sites.UpdateListItem(graphClient, _siteId,
+                bool updateBook = await _sites.UpdateListItem(graphClient, _siteId,
                                                       listId, itemId,
                                                       data);
-                return updatebook;
+                return updateBook;
             }
             else
             {
@@ -105,9 +105,9 @@ namespace AssetTracking.Repositories
                 string listId = addItem.Id;
                 string itemId = userItemId;
 
-                bool deletebook = await _sites.DeleteListItem(graphClient, _siteId,
+                bool deleteBook = await _sites.DeleteListItem(graphClient, _siteId,
                                                       listId, itemId);
-                return deletebook;
+                return deleteBook;
             }
             else
             {

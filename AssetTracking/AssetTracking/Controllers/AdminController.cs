@@ -34,7 +34,6 @@ namespace AssetTracking.Controllers
                 GraphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
                 ViewData["Response"] = await GraphService.GetUserJson(GraphClient, email, HttpContext);
             }
-
             return View();
         }
         public IActionResult Error()

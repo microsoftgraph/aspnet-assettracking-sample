@@ -13,7 +13,7 @@ namespace AssetTracking.Repositories
         private const string OfficeBooksDisplayName = "OfficeBooks";
         private ISiteListsCollectionPage _sharePointLists;
         private readonly Sites _sites;
-        private readonly string _siteId;
+        private readonly string siteId;
         public OfficeBookRepository()
         {
             _sites = new Sites();
@@ -42,7 +42,7 @@ namespace AssetTracking.Repositories
         }
         public async Task<bool> AddBook(OfficeBook officeBook, GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, _siteId);
+            _sharePointLists = await _sites.GetLists(graphClient, siteId);
 
             if (_sharePointLists != null)
             {
@@ -56,10 +56,10 @@ namespace AssetTracking.Repositories
                     { "Author0", officeBook.Author },
                     { "BookTitle", officeBook.Description }
                 };
-                bool addofficebooks = await _sites.AddListItem(graphClient, _siteId,
+                bool addOfficeBooks = await _sites.AddListItem(graphClient, siteId,
                                                       listId,
                                                       data);
-                return addofficebooks;
+                return addOfficeBooks;
             }
             else
             {
@@ -68,13 +68,13 @@ namespace AssetTracking.Repositories
         }
         public async Task<bool> UpdateBook(OfficeBook officeBook, GraphServiceClient graphClient, string siteId)        
         {
-            _sharePointLists = await _sites.GetLists(graphClient, _siteId);
+            _sharePointLists = await _sites.GetLists(graphClient, this.siteId);
             string userItemId = officeBook.ItemId;
 
             if (_sharePointLists != null)
             {
-                List addbook = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
-                string listId = addbook.Id;
+                List addBook = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
+                string listId = addBook.Id;
                 string itemId = userItemId;
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
@@ -84,10 +84,10 @@ namespace AssetTracking.Repositories
                     { "Author0", officeBook.Author },
                     { "BookTitle", officeBook.Description }
                 };
-                bool updatebook =  await _sites.UpdateListItem(graphClient, _siteId,
+                bool updateBook =  await _sites.UpdateListItem(graphClient, this.siteId,
                                                        listId, itemId,
                                                        data);
-                return updatebook;
+                return updateBook;
             }
             else
             {
@@ -96,16 +96,16 @@ namespace AssetTracking.Repositories
         }
         public async Task<bool> DeleteBook(OfficeBook officeBook, GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, _siteId);
+            _sharePointLists = await _sites.GetLists(graphClient, this.siteId);
             string userItemId = officeBook.ItemId;
             if (_sharePointLists != null)
             {
-                List addbook = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
-                string listId = addbook.Id;
+                List addBook = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
+                string listId = addBook.Id;
                 string itemId = userItemId;
-                bool deletebooks = await _sites.DeleteListItem(graphClient, _siteId,
+                bool deleteBooks = await _sites.DeleteListItem(graphClient, this.siteId,
                                                       listId, itemId);
-                return deletebooks;
+                return deleteBooks;
             }
             else
             {
