@@ -48,10 +48,10 @@ $(document).ready(function () {
                 "data": "BookID",
                 'visible': false
             },
-            { "data": "isbn" },
-            { "data": "title" },
+            { "data": "ISBN" },
+            { "data": "Title" },
             { "data": "Author0" },
-            { "data": "BookTitle" },
+            { "data": "Description" },
             {
                 "data": "BookID",
                 "render": function (data) {
@@ -77,7 +77,7 @@ $(document).ready(function () {
                 ISBN: isbn,
                 ResourceId: "2",
                 Title: title,
-                Author: author,
+                Author: author0,
                 BookDescription: description
             },
             error: function (xhr) {
