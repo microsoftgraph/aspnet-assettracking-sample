@@ -1,4 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
@@ -14,14 +14,14 @@ $(document).ready(function () {
         },
         "columns": [
             {
-                "data": "OfficeItemID",
+                "data": "ItemID",
                 'visible': false
             },
             { "data": "Title" },
             { "data": "SerialNo" },
             { "data": "Description" },
             {
-                "data": "OfficeItemID",
+                "data": "ItemID",
                 "render": function (data) {
                     return '<a href="#" id="editing" onclick="UpdateOfficeItem(' + data + ')"> Edit </a>|<a href="#" id="deleting" onclick="DeleteOfficeItem(' + data + ')"> Delete </a>'
                 }
@@ -36,7 +36,7 @@ $(document).ready(function () {
     });
     $('#tableBooks').DataTable({
         "columnDefs": [
-            { "orderable": false, "targets": [0, -1] }
+            { "orderable": false, "targets": [0, -1, -2,] }
         ],
         "ajax": {
             "url": "/OfficeBooks/OfficeBooksGet",
@@ -51,7 +51,7 @@ $(document).ready(function () {
             { "data": "isbn" },
             { "data": "title" },
             { "data": "Author0" },
-            { "data": "BookTitle" },
+            { "data": "description" },
             {
                 "data": "BookID",
                 "render": function (data) {
@@ -68,7 +68,7 @@ $(document).ready(function () {
         var isbn = $('#ISBN').val();
         var title = $('#Title').val();
         var author = $('#Author').val();
-        var description = $('#BookDescription').val();
+        var description = $('#Description').val();
         $.ajax({
             type: 'POST',
             url: '/OfficeBooks/AddBook',
@@ -103,7 +103,7 @@ $(document).ready(function () {
         var isbn = $('#ISBN').val();
         var title = $('#Title').val();
         var author = $('#Author').val();
-        var description = $('#BookDescription').val();
+        var description = $('#Description').val();
 
         $.ajax({
             type: 'POST',
@@ -136,7 +136,7 @@ $(document).ready(function () {
         var isbn = $('#ISBN').val();
         var title = $('#Title').val();
         var author = $('#Author').val();
-        var description = $('#BookDescription').val();
+        var description = $('#Description').val();
 
         $.ajax({
             type: 'POST',

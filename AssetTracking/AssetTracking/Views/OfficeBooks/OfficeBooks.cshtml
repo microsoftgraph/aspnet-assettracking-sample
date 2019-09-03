@@ -1,4 +1,4 @@
-﻿@using AssetTracking.Models;
+@using AssetTracking.Models;
 
 @{
     ViewData["Title"] = "OfficeBooks";
@@ -7,9 +7,9 @@
 <h1>Office Books</h1>
 
 <div class="text-left">
-    <a href="#" class="btn btn-default btn-rounded my-3" onclick="AddOfficeBook()">
+    <button type="button" onclick="AddOfficeBook()" class="btn btn-info mb-2 waves-effect waves-light">
         Add Office Book
-    </a>
+    </button>
 </div>
 
 <!-- Table with panel -->
@@ -40,6 +40,8 @@
                         </th>
                         <th class="th-lg">
                         </th>
+                        <th class="th-lg">
+                        </th>
                     </tr>
                 </thead>
                 <!--Table head-->
@@ -50,7 +52,7 @@
 </div>
 
 <div class="modal fade" id="EditBookForm" tabindex="-1" role="dialog" aria-labelledby="Edit"
-     aria-hidden="true">
+     aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog cascading-modal" role="document">
         <!--Content-->
         <div class="modal-content">
@@ -82,7 +84,7 @@
                     </div>
 
                     <div class="md-form form-sm">
-                        <input type="text" id="BookDescription" name="BookDescription" class="form-control">
+                        <input type="text" id="Description" name="Description" class="form-control">
                         <label for="form9" class="active">Description</label>
                     </div>
                     <div class="text-center mt-1-half">
