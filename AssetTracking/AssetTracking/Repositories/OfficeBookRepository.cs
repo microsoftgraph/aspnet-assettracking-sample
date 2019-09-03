@@ -55,10 +55,10 @@ namespace AssetTracking.Repositories
                     { "Author0", officeBook.Author },
                     { "BookTitle", officeBook.Description }
                 };
-                bool addOfficeBooks = await _sites.AddListItem(graphClient, siteId,
+                bool addOfficeBook = await _sites.AddListItem(graphClient, siteId,
                                                       listId,
                                                       data);
-                return addOfficeBooks;
+                return addOfficeBook;
             }
             else
             {
@@ -102,9 +102,9 @@ namespace AssetTracking.Repositories
                 List addBook = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
                 string listId = addBook.Id;
                 string itemId = userItemId;
-                bool deleteBooks = await _sites.DeleteListItem(graphClient, siteId,
+                bool deleteBook = await _sites.DeleteListItem(graphClient, siteId,
                                                       listId, itemId);
-                return deleteBooks;
+                return deleteBook;
             }
             else
             {

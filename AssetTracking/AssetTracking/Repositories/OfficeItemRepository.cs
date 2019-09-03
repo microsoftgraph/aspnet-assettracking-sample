@@ -10,7 +10,7 @@ namespace AssetTracking.Repositories
 {
     public class OfficeItemRepository : IOfficeItemRepository
     {
-        private const string OfficeItemsDisplayName = "OfficeItems";
+        private const string OfficeItemsDisplayName = "BorrowResources";
         private ISiteListsCollectionPage _sharePointLists;
         private readonly Sites _sites;
         public OfficeItemRepository()
