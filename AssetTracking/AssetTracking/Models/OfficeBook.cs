@@ -14,10 +14,10 @@ namespace AssetTracking.Models
 
         public string ISBN { get; set; }
 
-        [JsonProperty(PropertyName = "BookTitle")]
-        public string BookDescription { get; set; }
+        [JsonProperty(PropertyName = "Description")]
+        public string Description { get; set; }
 
-        [JsonProperty(PropertyName = "Author0")]
+        [JsonProperty(PropertyName = "Author")]
         public string Author { get; set; }
     }
 }

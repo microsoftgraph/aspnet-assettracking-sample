@@ -3,8 +3,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetTracking.Helpers;
+using AssetTracking.Interfaces;
 using AssetTracking.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
 
 namespace AssetTracking.Controllers
@@ -12,18 +14,19 @@ namespace AssetTracking.Controllers
     public class OfficeBooksController : Controller
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
-        private IOfficeBookRepository _officeBookRepository;
+        private readonly IOfficeBookRepository _officeBookRepository;
         private GraphServiceClient _graphClient;
+        public readonly string siteId;
 
-        public OfficeBooksController(IGraphSdkHelper graphSdkHelper, IOfficeBookRepository officeBookRepository)
+        public OfficeBooksController(IGraphSdkHelper graphSdkHelper, IOfficeBookRepository officeBookRepository, IConfiguration configuration)
         {
             _graphSdkHelper = graphSdkHelper;
             _officeBookRepository = officeBookRepository;
+            siteId = configuration["SiteId"];
         }
 
         public ActionResult OfficeBooks()
-        {
-            
+        {           
             return View();
         }
 
@@ -32,7 +35,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                List<OfficeBook> officeBook = await _officeBookRepository.GetBooks(_graphClient);
+                List<OfficeBook> officeBook = await _officeBookRepository.GetBooks(_graphClient, siteId);
 
                 return Json(new { data = officeBook });
             }
@@ -47,7 +50,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                List<OfficeBook> officeBookList = await _officeBookRepository.GetBooks(_graphClient);
+                List<OfficeBook> officeBookList = await _officeBookRepository.GetBooks(_graphClient, siteId);
                 OfficeBook officeBook = officeBookList.Where(d => d.ItemId == Id).FirstOrDefault();
                 return Json(officeBook);
             }
@@ -60,7 +63,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeBookRepository.AddBook(officeBook, _graphClient);
+                bool result = await _officeBookRepository.AddBook(officeBook, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
@@ -74,7 +77,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeBookRepository.UpdateBook(officeBook, _graphClient);
+                bool result = await _officeBookRepository.UpdateBook(officeBook, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
@@ -88,7 +91,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeBookRepository.DeleteBook(officeBook, _graphClient);
+                bool result = await _officeBookRepository.DeleteBook(officeBook, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else

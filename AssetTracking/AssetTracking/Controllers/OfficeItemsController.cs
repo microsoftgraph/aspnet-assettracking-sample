@@ -3,9 +3,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetTracking.Helpers;
+using AssetTracking.Interfaces;
 using AssetTracking.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
 
 namespace AssetTracking.Controllers
@@ -13,13 +14,15 @@ namespace AssetTracking.Controllers
     public class OfficeItemsController : Controller
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
-        public IOfficeItemRepository _officeItemRepository;
         private GraphServiceClient _graphClient;
-
-        public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository)
+        private readonly IOfficeItemRepository _officeItemRepository;
+        private readonly string siteId; 
+        
+        public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository, IConfiguration configuration)
         {
             _graphSdkHelper = graphSdkHelper;
             _officeItemRepository = officeItemRepository;
+            siteId = configuration["SiteId"];
         }
 
         public ActionResult OfficeItems()
@@ -27,13 +30,12 @@ namespace AssetTracking.Controllers
             return View();
         }
 
-
         public async Task<JsonResult> GetOfficeItems()
         {
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient);
+                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient,siteId);
                 return Json(new { data = officeItemList });
             }
             else
@@ -42,19 +44,17 @@ namespace AssetTracking.Controllers
             }
         }
 
-
         public async Task<JsonResult> GetItemsById(string Id)
         {
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient);
+                List<OfficeItem> officeItemList = await _officeItemRepository.GetItems(_graphClient, siteId);
                 OfficeItem officeItem = officeItemList.Where(d => d.ItemId == Id).FirstOrDefault();
                 return Json(officeItem);
             }
             return Json(null);
         }
-
 
         [HttpPost]
         public async Task<JsonResult> AddItem(OfficeItem officeItem)
@@ -62,7 +62,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeItemRepository.AddItem(officeItem, _graphClient);
+                bool result = await _officeItemRepository.AddItem(officeItem, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
@@ -76,7 +76,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeItemRepository.UpdateItem(officeItem, _graphClient);
+                bool result = await _officeItemRepository.UpdateItem(officeItem, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
@@ -90,7 +90,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _officeItemRepository.DeleteItem(officeItem, _graphClient);
+                bool result = await _officeItemRepository.DeleteItem(officeItem, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else

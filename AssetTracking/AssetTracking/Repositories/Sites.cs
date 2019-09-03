@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AssetTracking.Interfaces;
 using Microsoft.Graph;
-using AssetTracking.Models;
-using AssetTracking.Helpers;
 
-namespace AssetTracking
+namespace AssetTracking.Repositories
 {
-    public static class Sites
+    public class Sites : ISites
     {
-        public static async Task<ISiteListsCollectionPage> GetLists(GraphServiceClient graphClient, string siteId)
+        public async Task<ISiteListsCollectionPage> GetLists(GraphServiceClient graphClient, string siteId)
         {
             try
             {
                 var result = await graphClient
                                 .Sites[siteId]
                                 .Lists.Request().GetAsync();
-
                 return result;
             }
-            catch (ServiceException e)
+            catch 
             {
                 return null;
             }
         }
-        public async static Task<IListItemsCollectionPage> GetListItems(GraphServiceClient graphServiceClient, string siteId, string listId)
+        public async Task<IListItemsCollectionPage> GetListItems(GraphServiceClient graphClient, string siteId, string listId)
         {
-            IListItemsCollectionPage listItems = await graphServiceClient
+            IListItemsCollectionPage listItems = await graphClient
                             .Sites[siteId]
                             .Lists[listId]
                             .Items
@@ -35,7 +31,7 @@ namespace AssetTracking
                             .GetAsync();
             return listItems;
         }
-        public static async Task<bool> AddListItem(GraphServiceClient graphServiceClient, string siteId, string listId, IDictionary<string, object> data)
+        public async Task<bool> AddListItem(GraphServiceClient graphClient, string siteId, string listId, IDictionary<string, object> data)
         {
             var listItem = new ListItem
             {
@@ -44,10 +40,9 @@ namespace AssetTracking
                     AdditionalData = data,
                 }
             };
-
             try
             {
-                await graphServiceClient
+                await graphClient
 
                                     .Sites[siteId]
                                     .Lists[listId]
@@ -56,52 +51,47 @@ namespace AssetTracking
                                .AddAsync(listItem);
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.Message);
                 return false;
             }
         }
-        public static async Task<bool> UpdateListItem(GraphServiceClient graphServiceClient, string siteId, string listId, string itemId, IDictionary<string, object> data)
+        public  async Task<bool> UpdateListItem(GraphServiceClient graphClient, string siteId, string listId, string itemId, IDictionary<string, object> data)
         {
             var fieldValueSet = new FieldValueSet
             {
                 AdditionalData = data,
             };
-
             try
             {
-                await graphServiceClient
+                await graphClient
                                 .Sites[siteId]
                                 .Lists[listId]
                                 .Items[itemId]
                                 .Fields
                                 .Request()
                                 .UpdateAsync(fieldValueSet);
-
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
         }
-
-        public async static Task<bool> DeleteListItem(GraphServiceClient graphServiceClient, string siteId, string listId, string itemId)
+        public async Task<bool> DeleteListItem(GraphServiceClient graphClient, string siteId, string listId, string itemId)
         { 
             try
             {
-                await graphServiceClient
+                await graphClient
 
                                 .Sites[siteId]
                                 .Lists[listId]
                                 .Items[itemId]
                                 .Request()
                                 .DeleteAsync();
-
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
                 return false;
             }
