@@ -77,7 +77,7 @@ $(document).ready(function () {
                 ISBN: isbn,
                 ResourceId: "2",
                 Title: title,
-                Author: author,
+                Author: author0,
                 BookDescription: description
             },
             error: function (xhr) {
