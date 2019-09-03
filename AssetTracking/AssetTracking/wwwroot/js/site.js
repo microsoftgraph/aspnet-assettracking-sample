@@ -48,10 +48,10 @@ $(document).ready(function () {
                 "data": "BookID",
                 'visible': false
             },
-            { "data": "isbn" },
-            { "data": "title" },
+            { "data": "ISBN" },
+            { "data": "Title" },
             { "data": "Author0" },
-            { "data": "description" },
+            { "data": "Description" },
             {
                 "data": "BookID",
                 "render": function (data) {
@@ -270,15 +270,16 @@ function UpdateOfficeBook(ItemId) {
         data: { Id: ItemId },
         success: (function (result) {
             $('#ItemId').val(result.BookID);
-            $('#ISBN').val(result.isbn);
-            $('#Title').val(result.title);
+            $('#ISBN').val(result.ISBN);
+            $('#Title').val(result.Title);
             $('#Author').val(result.Author0);
-            $('#BookDescription').val(result.BookTitle);
+            $('#Description').val(result.Description);
             $('#EditBookForm').modal();
         })
     });
 
 }
+
 function DeleteOfficeBook(ItemId) {
     $('#SubmitNewOfficeBook').hide();
     $('#SubmitUpdateOfficeBook').hide();
@@ -290,10 +291,10 @@ function DeleteOfficeBook(ItemId) {
         data: { Id: ItemId },
         success: (function (result) {
             $('#ItemId').val(result.BookID);
-            $('#ISBN').val(result.isbn).prop('disabled', true);
-            $('#Title').val(result.title).prop('disabled', true);
+            $('#ISBN').val(result.ISBN).prop('disabled', true);
+            $('#Title').val(result.Title).prop('disabled', true);
             $('#Author').val(result.Author0).prop('disabled', true);
-            $('#BookDescription').val(result.BookTitle).prop('disabled', true);
+            $('#Description').val(result.Description).prop('disabled', true);
             $('#EditBookForm').modal();
         })
     });
@@ -316,7 +317,7 @@ function UpdateOfficeItem(ItemId) {
         url: '/OfficeItems/GetItemsById',
         data: { Id: ItemId },
         success: (function (result) {
-            $('#ItemID').val(result.OfficeItemID);
+            $('#ItemID').val(result.ItemID);
             $('#SerialNo').val(result.SerialNo);
             $('#Title').val(result.Title);
             $('#ItemDescription').val(result.Description);
@@ -325,6 +326,7 @@ function UpdateOfficeItem(ItemId) {
     });
 
 }
+
 function DeleteOfficeItem(ItemId) {
     $('#SubmitNewOfficeItem').hide();
     $('#SubmitUpdateOfficeItem').hide();
@@ -335,7 +337,7 @@ function DeleteOfficeItem(ItemId) {
         url: '/OfficeItems/GetItemsById',
         data: { Id: ItemId },
         success: (function (result) {
-            $('#ItemID').val(result.OfficeItemID);
+            $('#ItemID').val(result.ItemID);
             $('#SerialNo').val(result.SerialNo).prop('disabled', true);
             $('#Title').val(result.Title).prop('disabled', true);
             $('#ItemDescription').val(result.Description).prop('disabled', true);
