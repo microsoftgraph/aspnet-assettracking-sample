@@ -11,23 +11,27 @@ namespace AssetTracking.Repositories
     public class OfficeBookRepository : IOfficeBookRepository
     {
         private const string OfficeBooksDisplayName = "OfficeBooks";
-        private ISiteListsCollectionPage _sharePointLists;
+        private ISiteListsCollectionPage _sharePointList;
         private readonly Sites _sites;
+
         public OfficeBookRepository()
         {
             _sites = new Sites();
-            _sharePointLists = new SiteListsCollectionPage();
+            _sharePointList = new SiteListsCollectionPage();
         }
+
         public async Task<List<OfficeBook>> GetBooks(GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, siteId);
+            _sharePointList = await _sites.GetLists(graphClient, siteId);
             List<OfficeBook> officeBooksDirectoryList = new List<OfficeBook>();
-            if (_sharePointLists != null)
+
+            if (_sharePointList != null)
             {
-                List officeBookList = _sharePointLists.Where(x => x.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
+                List officeBookList = _sharePointList.Where(x => x.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
                 string listId = officeBookList.Id;
-                IListItemsCollectionPage _officeBookItems = await _sites.GetListItems(graphClient, siteId, listId);
-                foreach (ListItem item in _officeBookItems)
+                IListItemsCollectionPage officeBookItem = await _sites.GetListItems(graphClient, siteId, listId);
+
+                foreach (ListItem item in officeBookItem)
                 {
                     IDictionary<string,object> resourceList = item.Fields.AdditionalData;
                     string jsonString = JsonConvert.SerializeObject(resourceList);
@@ -37,15 +41,17 @@ namespace AssetTracking.Repositories
                     officeBooksDirectoryList.Add(officeResource);
                 }
             }
+
             return officeBooksDirectoryList;
         }
+
         public async Task<bool> AddBook(OfficeBook officeBook, GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, siteId);
+            _sharePointList = await _sites.GetLists(graphClient, siteId);
 
-            if (_sharePointLists != null)
+            if (_sharePointList != null)
             {
-                List officeBookList = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
+                List officeBookList = _sharePointList.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
                 string listId = officeBookList.Id;
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
@@ -65,14 +71,15 @@ namespace AssetTracking.Repositories
                 return false;
             }
         }
+
         public async Task<bool> UpdateBook(OfficeBook officeBook, GraphServiceClient graphClient, string siteId)        
         {
-            _sharePointLists = await _sites.GetLists(graphClient, siteId);
+            _sharePointList = await _sites.GetLists(graphClient, siteId);
             string userItemId = officeBook.ItemId;
 
-            if (_sharePointLists != null)
+            if (_sharePointList != null)
             {
-                List addBook = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
+                List addBook = _sharePointList.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
                 string listId = addBook.Id;
                 string itemId = userItemId;
                 IDictionary<string, object> data = new Dictionary<string, object>
@@ -93,13 +100,15 @@ namespace AssetTracking.Repositories
                 return false;
             }
         }
+
         public async Task<bool> DeleteBook(OfficeBook officeBook, GraphServiceClient graphClient, string siteId)
         {
-            _sharePointLists = await _sites.GetLists(graphClient, siteId);
+            _sharePointList = await _sites.GetLists(graphClient, siteId);
             string userItemId = officeBook.ItemId;
-            if (_sharePointLists != null)
+
+            if (_sharePointList != null)
             {
-                List addBook = _sharePointLists.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
+                List addBook = _sharePointList.Where(b => b.DisplayName.Contains(OfficeBooksDisplayName)).FirstOrDefault();
                 string listId = addBook.Id;
                 string itemId = userItemId;
                 bool deleteBook = await _sites.DeleteListItem(graphClient, siteId,
