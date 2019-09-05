@@ -21,7 +21,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:55657/"
+      "applicationUrl": "https://localhost:44394/signin-oidc"
     }
   }
 }

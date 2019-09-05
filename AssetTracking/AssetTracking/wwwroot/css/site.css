@@ -111,3 +111,8 @@ nav ul a{
     color:blue;
 }
 
+.modal{
+    background-color: transparent;
+    max-height: 100%;
+    width: 100%;
+}

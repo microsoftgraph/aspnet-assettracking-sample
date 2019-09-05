@@ -1,0 +1,86 @@
+@{
+    ViewData["Title"] = "Office Items";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="text-left">
+    <button type="button" onclick="AddOfficeItem()" class="btn btn-info mb-2 waves-effect waves-light">
+        Add Office Item
+        </button>
+</div>
+
+<!-- Table with panel -->
+<h5>Available Items</h5>
+<div class="px-4">
+    <div class="table-wrapper">
+        <div class="table-responsive">
+            <!--Table-->
+            <table class="table table-hover mb-0" id="tableItems">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th class="th-lg" style="display:none">
+                            ItemId
+                        </th>
+                        <th class="th-lg">
+                            Title
+                        </th>
+                        <th class="th-lg">
+                            Serial No
+                        </th>
+                        <th class="th-lg">
+                            Description
+                        </th>
+                        <th class="th-lg">
+                        </th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="EditItemForm" tabindex="-1" role="dialog" aria-labelledby="Edit"
+     aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> <span id="itemChange">Edit</span> Office Item</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body mb-0">
+                <form id="itemForm">
+                    <div class="md-form form-sm">
+                        <input type="text" id="ItemId" name="ItemId" class="form-control" style="display:none">
+                        <input type="text" id="Title" name="Title" class="form-control">
+                        <label for="form9" class="active">Item Name</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input type="text" id="SerialNo" name="SerialNo" class="form-control">
+                        <label for="form9" class="active">SerialNo</label>
+                    </div>
+
+                    <div class="md-form form-sm">
+                        <input type="text" id="ItemDescription" name="ItemDescription" class="form-control">
+                        <label for="form9" class="active">Item Description</label>
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button type="button" id="SubmitUpdateOfficeItem" class="btn btn-info mb-2 waves-effect waves-light">Update<i class="fas fa-send ml-1"></i></button>
+                        <button type="button" id="SubmitNewOfficeItem" class="btn btn-info mb-2 waves-effect waves-light">Add<i class="fas fa-send ml-1"></i></button>
+                        <button type="button" id="SubmitDeleteOfficeItem" class="btn btn-info mb-2 waves-effect waves-light">Delete<i class="fas fa-send ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>

@@ -19,7 +19,6 @@ namespace AssetTracking.Controllers
                 new AuthenticationProperties { RedirectUri = redirectUrl },
                 OpenIdConnectDefaults.AuthenticationScheme);
         }
-
         [HttpGet]
         public IActionResult SignOut()
         { 
@@ -29,7 +28,6 @@ namespace AssetTracking.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 OpenIdConnectDefaults.AuthenticationScheme);
         }
-
         [HttpGet]
         public IActionResult SignedOut()
         {
@@ -39,13 +37,11 @@ namespace AssetTracking.Controllers
             }
             return View();
         }
-
         [HttpGet]
         public IActionResult AccessDenied()
         {
             return View();
-        }
-       
+        }       
     }
 }
 

@@ -1,17 +1,17 @@
 ﻿using AssetTracking.Extensions;
 using AssetTracking.Helpers;
+using AssetTracking.Interfaces;
+using AssetTracking.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Threading.Tasks;
 
 namespace AssetTracking
 {
@@ -47,6 +47,8 @@ namespace AssetTracking
             services.AddSession();
             services.AddSingleton<IGraphAuthProvider, GraphAuthProvider>();
             services.AddTransient<IGraphSdkHelper, GraphSdkHelper>();
+            services.AddScoped<IOfficeBookRepository, OfficeBookRepository>();
+            services.AddScoped<IOfficeItemRepository, OfficeItemRepository>();
             services.Configure<HstsOptions>(options =>
             {
                 options.IncludeSubDomains = true;
