@@ -13,14 +13,10 @@ namespace AssetTracking.Controllers
         }
         public GraphServiceClient GraphClient { get; private set; }
 
-        [Route("")]
         public IActionResult MyBooks()
         {
             return View("~/Views/User/MyBooks.cshtml");
         }
-        
-        [AllowAnonymous]
-        [Route("admin")]
         public IActionResult Index()
         {
             return View();

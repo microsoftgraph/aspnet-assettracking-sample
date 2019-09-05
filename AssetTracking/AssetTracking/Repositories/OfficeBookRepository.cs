@@ -55,11 +55,11 @@ namespace AssetTracking.Repositories
                 string listId = officeBookList.Id;
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
-                    { "Resource_x0020_IDLookupId", "2" },
+                    { "ResourceIDLookupId", "2" },
                     { "Title", officeBook.Title },
                     { "ISBN", officeBook.ISBN },
                     { "Author0", officeBook.Author },
-                    { "BookTitle", officeBook.Description }
+                    { "Title", officeBook.Description }
                 };
                 bool addOfficeBook = await _sites.AddListItem(graphClient, siteId,
                                                       listId,
