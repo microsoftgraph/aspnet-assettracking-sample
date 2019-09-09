@@ -1,19 +1,28 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace AssetTracking.Models
 {
     public class OfficeBook
     {
-        [JsonProperty(PropertyName = "BookID")]
+        [JsonProperty(PropertyName = "id")]
         public string ItemId { get; set; }
-        [JsonProperty(PropertyName = "Title")]
+
+        [Required]
         public string Title { get; set; }
+
+        [Required]
         [JsonProperty(PropertyName = "ResourceIDLookupId")]
         public string ResourceId { get; set; }
-        [JsonProperty(PropertyName ="ISBN")]
+
+        [Required]
         public string ISBN { get; set; }
+
+        [Required]
         [JsonProperty(PropertyName = "Description")]
         public string Description { get; set; }
+
+        [Required]
         [JsonProperty(PropertyName = "Author0")]
         public string Author { get; set; }
     }
