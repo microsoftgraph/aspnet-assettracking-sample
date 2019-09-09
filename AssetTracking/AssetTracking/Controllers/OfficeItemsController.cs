@@ -106,7 +106,7 @@ namespace AssetTracking.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
-                bool result = await _borrowedResourcesRespository.BorrowBook(borrowedResources, _graphClient, siteId);
+                bool result = await _borrowedResourcesRespository.BorrowItem(borrowedResources, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
