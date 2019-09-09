@@ -20,6 +20,8 @@ namespace AssetTracking.Models
         public string ISBN { get; set; }
         [JsonProperty(PropertyName = "Title")]
         public string BookTitle { get; set; }
+        [JsonProperty(PropertyName = "SerialNo")]
+        public string  SerialNo { get; set; }
         [JsonProperty(PropertyName = "Author0")]
         public string Author { get; set; }
         [JsonProperty(PropertyName = "DueDate")]

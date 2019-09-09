@@ -49,6 +49,7 @@ namespace AssetTracking
             services.AddTransient<IGraphSdkHelper, GraphSdkHelper>();
             services.AddScoped<IOfficeBookRepository, OfficeBookRepository>();
             services.AddScoped<IOfficeItemRepository, OfficeItemRepository>();
+            services.AddScoped<IBorrowedResources, BorrowedResourcesRepository>();
             services.Configure<HstsOptions>(options =>
             {
                 options.IncludeSubDomains = true;

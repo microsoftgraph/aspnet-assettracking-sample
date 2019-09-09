@@ -22,7 +22,7 @@ namespace AssetTracking.Repositories
         {
             _sharePointList = await _sites.GetLists(graphClient, siteId);
             List<BorrowedResources> borrowedBookDirectoryList = new List<BorrowedResources>();
-            string BorrowedBookDisplayName = "ISBN" ;
+            string BorrowedBookDisplayName = "BorrowedResources" ;
             DateTime returnDate = borrowedResources.ReturnDate;
             DateTime borrowDate = borrowedResources.BorrowDate;
             DateTime dueDate = borrowedResources.DueDate;

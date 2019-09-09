@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AssetTracking.Helpers;
 using AssetTracking.Interfaces;
 using AssetTracking.Models;
+using AssetTracking.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
@@ -15,13 +16,15 @@ namespace AssetTracking.Controllers
     {
         private readonly IGraphSdkHelper _graphSdkHelper;
         private readonly IOfficeBookRepository _officeBookRepository;
+        private readonly IBorrowedResources _borrowedResourcesRepository;
         private GraphServiceClient _graphClient;
         public readonly string siteId;
 
-        public OfficeBooksController(IGraphSdkHelper graphSdkHelper, IOfficeBookRepository officeBookRepository, IConfiguration configuration)
+        public OfficeBooksController(IGraphSdkHelper graphSdkHelper, IOfficeBookRepository officeBookRepository, IConfiguration configuration, IBorrowedResources borrowedResourcesRepository)
         {
             _graphSdkHelper = graphSdkHelper;
             _officeBookRepository = officeBookRepository;
+            _borrowedResourcesRepository = borrowedResourcesRepository;
             siteId = configuration["SiteId"];
         }
 
@@ -92,6 +95,19 @@ namespace AssetTracking.Controllers
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
                 bool result = await _officeBookRepository.DeleteBook(officeBook, _graphClient, siteId);
+                return Json(new { IsSuccess = result });
+            }
+            else
+            {
+                return Json(new { IsSuccess = false });
+            }
+        }
+        public async Task<JsonResult> BorrowBook(BorrowedResources borrowedResources)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+                bool result = await _borrowedResourcesRepository.BorrowBook(borrowedResources, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
