@@ -31,7 +31,7 @@ $(document).ready(function () {
             {
                 "data": "ItemID",
                 "render": function (data) {
-                    return '<a href="#modalID" class="editingOfficeBook" onclick="UpdateOfficeItem(' + data + ')"> Edit </a>|<a href="#" onclick="DeleteOfficeItem(' + data + ')"> Delete </a>'
+                    return '<a href="#EditItemForm" data-toggle="modal" onclick="UpdateOfficeItem(' + data + ')"> Edit </a>|<a href="#EditItemForm" data-toggle="modal" onclick="DeleteOfficeItem(' + data + ')"> Delete </a>'
                 }
             }
         ]  
@@ -169,7 +169,7 @@ $(document).ready(function () {
         }, 5000);
     });
 
-    //Posting book details when one wants to delete a book
+    //Posting book details when one Deletes a book
     $("#SubmitDeleteOfficeBook").click(function () {
         var itemId = $('#ItemId').val();
         var isbn = $('#ISBN').val();
@@ -214,13 +214,13 @@ $(document).ready(function () {
     });
 
     $("#SubmitNewOfficeItem").click(function () {
-        var itemId = $('#ItemID').val();
+        var itemId = $('#ItemId').val();
         var serialNo = $('#SerialNo').val();
         var itemName = $('#Title').val();
         var description = $('#ItemDescription').val();
         $.ajax({
             type: 'POST',
-            url: '/OfficeItem/AddItem',
+            url: '/OfficeItems/AddItem',
             data: {
                 ItemId: itemId,
                 Title: itemName,
@@ -233,7 +233,10 @@ $(document).ready(function () {
             },
             success: (function (result) {
                 if (result) {
-                    alert("Item succesfully added");
+                    $('#itemResult').show();
+                    $('#itemResult').addClass("alert alert-success alert-dismissible fade show");
+                    $('#itemResult').html('<button type="button" class="close">×</button><b>Success!</b> Item Successfully Added</div >');
+                    $('#EditItemForm').modal("hide");
                     $('#tableItems').DataTable().ajax.reload();
                 }
                 else {
@@ -241,12 +244,16 @@ $(document).ready(function () {
                 }
             })
         });
-
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 5000);
     });
 
     $("#SubmitUpdateOfficeItem").click(function () {
 
-        var itemId = $('#ItemID').val();
+        var itemId = $('#ItemId').val();
         var serialNo = $('#SerialNo').val();
         var itemName = $('#Title').val();
         var description = $('#ItemDescription').val();
@@ -266,7 +273,9 @@ $(document).ready(function () {
             },
             success: (function (result) {
                 if (result) {
-                    alert("Item succesfully updated");
+                    $('#itemResult').show();
+                    $('#itemResult').addClass("alert alert-success alert-dismissible fade show");
+                    $('#itemResult').html('<button type="button" class="close">×</button><b>Success!</b> Item Successfully Updated</div >');
                     $('#EditItemForm').modal("hide");
                     $('#tableItems').DataTable().ajax.reload();
                 }
@@ -275,10 +284,15 @@ $(document).ready(function () {
                 }
             })
         });
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 5000);
     });
 
     $("#SubmitDeleteOfficeItem").click(function () {
-        var itemId = $('#ItemID').val();
+        var itemId = $('#ItemId').val();
         var serialNo = $('#SerialNo').val();
         var itemName = $('#Title').val();
         var description = $('#ItemDescription').val();
@@ -298,12 +312,45 @@ $(document).ready(function () {
             },
             success: (function (result) {
                 if (result) {
-                    alert("Item succesfully deleted");
+                    $('#itemResult').show();
+                    $('#itemResult').addClass("alert alert-success alert-dismissible fade show");
+                    $('#itemResult').html('<button type="button" class="close">×</button><b>Success!</b> Item Successfully Deleted</div >');
                     $('#EditItemForm').modal("hide");
                     $('#tableItems').DataTable().ajax.reload();
                 }
                 else {
                     alert("Unable to delete item");
+                }
+            })
+        });
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 5000);
+    });
+
+    $("#SubmitBorrowBook").click(function () {
+        var itemId = $('#ItemId').val();
+        var isbn = $('#bookISBN').val();
+        var title = $('#bookTitle').val();
+        var author = $('#bookAuthor').val();
+        var borrowDate = $('#borrowDate').val();
+        var returnDate = $('#returnDate').val();
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: {
+           
+            },
+            error: function (xhr) {
+                alert('Error: ' + xhr.statusText);
+            },
+            success: (function (result) {
+                if (result) {         
+                    $('#BorrowFormModal').modal("hide");
+                }
+                else {
                 }
             })
         });
@@ -367,7 +414,7 @@ function UpdateOfficeItem(ItemId) {
         url: '/OfficeItems/GetItemsById',
         data: { Id: ItemId },
         success: (function (result) {
-            $('#ItemID').val(result.ItemID);
+            $('#ItemId').val(result.ItemID);
             $('#SerialNo').val(result.SerialNo);
             $('#Title').val(result.Title);
             $('#ItemDescription').val(result.Description);
@@ -387,7 +434,7 @@ function DeleteOfficeItem(ItemId) {
         url: '/OfficeItems/GetItemsById',
         data: { Id: ItemId },
         success: (function (result) {
-            $('#ItemID').val(result.ItemID);
+            $('#ItemId').val(result.ItemID);
             $('#SerialNo').val(result.SerialNo).prop('disabled', true);
             $('#Title').val(result.Title).prop('disabled', true);
             $('#ItemDescription').val(result.Description).prop('disabled', true);
@@ -409,7 +456,7 @@ function BorrowBook(bookId) {
         url: '/OfficeBooks/OfficeBooksGetbyId',
         data: { Id: bookId },
         success: (function (result) {
-            $('#bookId').val(result.BookID);
+            $('#bookId').val(result.id);
             $('#bookISBN').val(result.isbn);
             $('#bookTitle').val(result.title);
             $('#bookAuthor').val(result.Author0);
