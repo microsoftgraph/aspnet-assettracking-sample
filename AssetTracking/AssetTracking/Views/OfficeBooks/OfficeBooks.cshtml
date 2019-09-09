@@ -3,9 +3,8 @@
 @{
     ViewData["Title"] = "OfficeBooks";
 }
-<div id="result" role="alert"></div>
 <h1>Office Books</h1>
-
+<div id="result" role="alert"></div>
 <div class="text-left">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditBookForm" onclick="AddOfficeBook()">
         Add Office Book
@@ -115,11 +114,10 @@
             <form>
                 <div class="modal-body mb-0">
                     <div class="md-form form-sm">
-                        <input type="text" id="bookId" name="ItemId" class="form-control" style="display:none">
+                        <input type="text" id="borrowItemId" name="ItemId" class="form-control" style="display:none">
                         <input type="text" id="bookISBN" class="form-control">
                         <label for="form8" class="active">Book ISBN</label>
                     </div>
-
                     <div class="md-form form-sm">
                         <input type="text" id="bookTitle" class="form-control">
                         <label for="form9" class="active">Book Title</label>
@@ -129,9 +127,8 @@
                         <input type="text" id="bookAuthor" class="form-control">
                         <label for="form9" class="active">Author</label>
                     </div>
-
                     <div class="md-form form-sm">
-                        <input type="date" id="borrowDate" class="form-control" data-date-format="dd/mm/yyyy">
+                        <input type="date" id="borrowDate" class="form-control">
                         <label for="form9" class="active">Borrow Date </label>
                     </div>
                     <div class="md-form form-sm">
