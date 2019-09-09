@@ -1,19 +1,32 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AssetTracking.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Graph;
+using AssetTracking.Helpers;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace AssetTracking.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly IGraphSdkHelper _graphSdkHelper;
+        public HomeController( IGraphSdkHelper graphSdkHelper)
         {
+            _graphSdkHelper = graphSdkHelper;
         }
         public GraphServiceClient GraphClient { get; private set; }
+        public async Task<IActionResult> Index(string email)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                email = email ?? User.FindFirst("preferred_username")?.Value;
+                ViewData["Email"] = email;
 
-        [AllowAnonymous]
+        public IActionResult MyBooks()
+        {
+            return View("~/Views/User/MyBooks.cshtml");
+        }
         public IActionResult Index()
         {
             return View();
