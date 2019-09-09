@@ -7,6 +7,8 @@ namespace AssetTracking.Interfaces
 {
     public interface IBorrowedResources
     {
-        Task<List<BorrowedResources>> GetBorrowedBooks(BorrowedResources borrowedResources, GraphServiceClient graphClient, string siteId);
+        Task<List<BorrowedResources>> GetBorrowedResources(BorrowedResources borrowedResources, GraphServiceClient graphClient, string siteId);
+        Task<bool> BorrowBook(BorrowedResources borrowedResources, GraphServiceClient graphClient, string siteId);
+        Task<bool> BorrowItem(BorrowedResources borrowedResources, GraphServiceClient graphClient, string siteId);
     }
 }
