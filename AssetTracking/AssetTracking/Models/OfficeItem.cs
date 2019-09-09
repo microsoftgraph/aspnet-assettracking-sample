@@ -4,7 +4,7 @@ namespace AssetTracking.Models
 {
     public class OfficeItem
     {
-        [JsonProperty(PropertyName = "OfficeItemID")]
+        [JsonProperty(PropertyName = "ItemID")]
         public string ItemId { get; set; }
         [JsonProperty (PropertyName ="Title")]
         public string Title { get; set; }

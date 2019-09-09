@@ -2,13 +2,15 @@
 {
     var username = User.Identity.Name ?? User.FindFirst("preferred_username").Value;
     <ul class="nav navbar-nav navbar-right">
-        <li class="navbar-text">@username</li>
-        <li><a asp-area="" asp-controller="Account" asp-action="SignOut">Sign Out</a></li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@username</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="SignOut">Sign Out</a>
+            </div>
+        </li>
     </ul>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Signin">Sign in</a></li>
-    </ul>
+        <li class="nav-item"><a asp-area="" asp-controller="Account" asp-action="Signin">Sign in</a></li>  
 }

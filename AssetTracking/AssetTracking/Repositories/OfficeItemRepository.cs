@@ -55,9 +55,8 @@ namespace AssetTracking.Repositories
                 string listId = addItem.Id;
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
-                    {"OfficeItemID", officeItem.ItemId},
                     {"Title", officeItem.Title },
-                    {"Resource_x0020_IDLookupId", officeItem.ResourceId },
+                    {"ResourceIDLookupId", officeItem.ResourceId },
                     {"SerialNo", officeItem.SerialNo },
                     {"Description", officeItem.ItemDescription }
                 };
@@ -83,9 +82,8 @@ namespace AssetTracking.Repositories
 
                 IDictionary<string, object> data = new Dictionary<string, object>
                 {
-                    {"OfficeItemID", officeItem.ItemId},
                     {"Title", officeItem.Title },
-                    {"Resource_x0020_IDLookupId", officeItem.ResourceId },
+                    {"ResourceIDLookupId", officeItem.ResourceId },
                     {"SerialNo", officeItem.SerialNo },
                     {"Description", officeItem.ItemDescription }
                 };
