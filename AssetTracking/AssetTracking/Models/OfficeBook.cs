@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace AssetTracking.Models
 {
     public class OfficeBook
     {
-        [JsonProperty(PropertyName = "BookID")]
+        [JsonProperty(PropertyName = "id")]
         public string ItemId { get; set; }
         [JsonProperty(PropertyName = "Title")]
         public string Title { get; set; }
