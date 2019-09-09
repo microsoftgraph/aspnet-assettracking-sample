@@ -33,6 +33,12 @@ $(document).ready(function () {
                 "render": function (data) {
                     return '<a href="#EditItemForm" data-toggle="modal" onclick="UpdateOfficeItem(' + data + ')"> Edit </a>|<a href="#EditItemForm" data-toggle="modal" onclick="DeleteOfficeItem(' + data + ')"> Delete </a>'
                 }
+            },
+            {
+                "data": "ItemID",
+                "render": function (data) {
+                    return '<a href="#BorrowItemModal" onclick="BorrowItem(' + data + ')">Borrow</a>'
+                }
             }
         ]  
     });
@@ -56,8 +62,8 @@ $(document).ready(function () {
                 "data": "id",
                 'visible': false
             },
-            { "data": "isbn" },
-            { "data": "title" },
+            { "data": "ISBN" },
+            { "data": "Title" },
             { "data": "Author0" },
             { "data": "Description" },
             {
@@ -69,13 +75,38 @@ $(document).ready(function () {
             {
                 "data": "id",
                 "render": function (data) {
-                    return '<a href="#BorrowFormModal" onclick="BorrowBook(' + data + ')">Borrow</a>'
+                    return '<a href="#BorrowFormModal" id="borrow('+data+')" onclick="BorrowBook(' + data + ')">Borrow</a>'
                 }
             }
         ]  
     });
 
     $('#t_current').DataTable();
+    //    {
+    //    "columnDefs": [
+    //        { "orderable": false, "targets": [-1] }
+    //    ],
+    //    "ajax": {
+    //        "url": "/OfficeBooks/BorrowBook",
+    //        "type": "GET",
+    //        "datatype": "json"
+    //    },
+    //    "columns": [
+    //        {
+    //            "data": "BorrowedResourceID",
+    //            'visible': false
+    //        },
+    //        { "data": "BookTitle" },
+    //        { "data": "BorrowDate" },
+    //        { "data": "DueDate" },
+    //        {
+    //            "data": "BorrowedResourceID",
+    //            "render": function (data) {
+    //                return '<a href="#"> Return </a>'
+    //            }
+    //        }
+    //    ]
+    //});
 
     //resetting form elements whenever a div is closed
     $('.modal').on('hidden.bs.modal', function () {
@@ -95,9 +126,9 @@ $(document).ready(function () {
             url: '/OfficeBooks/AddBook',
             data: {
                 itemId: itemId,
-                isbn: isbn,
+                ISBN: isbn,
                 ResourceId: "1",
-                title: title,
+                Title: title,
                 Author: author,
                 Description: description
             },
@@ -213,6 +244,7 @@ $(document).ready(function () {
         }, 5000);
     });
 
+    //Adding a new Office Item 
     $("#SubmitNewOfficeItem").click(function () {
         var itemId = $('#ItemId').val();
         var serialNo = $('#SerialNo').val();
@@ -251,6 +283,7 @@ $(document).ready(function () {
         }, 5000);
     });
 
+    //Posting an Item's Details when one Updates an Item
     $("#SubmitUpdateOfficeItem").click(function () {
 
         var itemId = $('#ItemId').val();
@@ -291,6 +324,7 @@ $(document).ready(function () {
         }, 5000);
     });
 
+    //Posting an Item's Details when one Updates an Item
     $("#SubmitDeleteOfficeItem").click(function () {
         var itemId = $('#ItemId').val();
         var serialNo = $('#SerialNo').val();
@@ -330,8 +364,9 @@ $(document).ready(function () {
         }, 5000);
     });
 
+    //Borrowing a Book
     $("#SubmitBorrowBook").click(function () {
-        var itemId = $('#ItemId').val();
+        var itemId = $('#borrowItemId').val();
         var isbn = $('#bookISBN').val();
         var title = $('#bookTitle').val();
         var author = $('#bookAuthor').val();
@@ -339,18 +374,25 @@ $(document).ready(function () {
         var returnDate = $('#returnDate').val();
         $.ajax({
             type: 'POST',
-            url: '',
+            url: '/OfficeBooks/BorrowBook',
             data: {
-           
+                ItemId: itemId,
+                ISBN: isbn,
+                BookTitle: title,
+                Author: author,
+                BorrowDate: borrowDate,
+                ReturnDate: returnDate
             },
             error: function (xhr) {
                 alert('Error: ' + xhr.statusText);
             },
             success: (function (result) {
-                if (result) {         
+                if (result) {
+                    alert("Book Borrowed");
                     $('#BorrowFormModal').modal("hide");
                 }
                 else {
+                    alert("Unable to Borrow Book")
                 }
             })
         });
@@ -367,8 +409,8 @@ function UpdateOfficeBook(ItemId) {
         data: { Id: ItemId },
         success: (function (result) {
             $('#ItemId').val(result.id);
-            $('#ISBN').val(result.isbn);
-            $('#Title').val(result.title);
+            $('#ISBN').val(result.ISBN);
+            $('#Title').val(result.Title);
             $('#Author').val(result.Author0);
             $('#Description').val(result.Description);
             $('#EditBookForm').modal();
@@ -388,8 +430,8 @@ function DeleteOfficeBook(ItemId) {
         data: { Id: ItemId },
         success: (function (result) {
             $('#ItemId').val(result.id);
-            $('#ISBN').val(result.isbn).prop('disabled', true);
-            $('#Title').val(result.title).prop('disabled', true);
+            $('#ISBN').val(result.ISBN).prop('disabled', true);
+            $('#Title').val(result.Title).prop('disabled', true);
             $('#Author').val(result.Author0).prop('disabled', true);
             $('#Description').val(result.Description).prop('disabled', true);
             $('#EditBookForm').modal();
@@ -451,16 +493,31 @@ function AddOfficeItem() {
     $('#SubmitDeleteOfficeItem').hide();
 }
 
-function BorrowBook(bookId) {
+function BorrowBook(borrowItemId) {
     $.ajax({
         url: '/OfficeBooks/OfficeBooksGetbyId',
-        data: { Id: bookId },
+        data: { Id: borrowItemId },
         success: (function (result) {
-            $('#bookId').val(result.id);
-            $('#bookISBN').val(result.isbn);
-            $('#bookTitle').val(result.title);
+            console.log(result);
+            $('#borrowItemId').val(result.id);
+            $('#bookISBN').val(result.ISBN);
+            $('#bookTitle').val(result.Title);
             $('#bookAuthor').val(result.Author0);
             $('#BorrowFormModal').modal();
+        })
+    });
+}
+
+function BorrowItem(ItemId) {
+    $.ajax({
+        url: '/OfficeItems/GetItemsById',
+        data: { Id: ItemId },
+        success: (function (result) {
+            $('#ItemId').val(result.ItemID);
+            $('#SerialNo').val(result.SerialNo);
+            $('#Title').val(result.Title);
+            $('#ItemDescription').val(result.Description);
+            $('#BorrowItemModal').modal();
         })
     });
 }
