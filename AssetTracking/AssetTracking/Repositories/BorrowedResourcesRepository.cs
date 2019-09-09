@@ -11,8 +11,10 @@ namespace AssetTracking.Repositories
 {
     public class BorrowedResourcesRepository : IBorrowedResources
     {
+        private const string BorrowedBookDisplayName = "BorrowedResources";
         private ISiteListsCollectionPage _sharePointList;
         private readonly Sites _sites;
+
         public BorrowedResourcesRepository()
         {
             _sites = new Sites();
@@ -22,7 +24,6 @@ namespace AssetTracking.Repositories
         {
             _sharePointList = await _sites.GetLists(graphClient, siteId);
             List<BorrowedResources> borrowedBookDirectoryList = new List<BorrowedResources>();
-            string BorrowedBookDisplayName = "BorrowedResources" ;
             DateTime returnDate = borrowedResources.ReturnDate;
             DateTime borrowDate = borrowedResources.BorrowDate;
             DateTime dueDate = borrowedResources.DueDate;
@@ -49,32 +50,37 @@ namespace AssetTracking.Repositories
         }
         public async Task<bool> BorrowBook(BorrowedResources borrowedResources, GraphServiceClient graphClient, string siteId)
         {
-            string BorrowedBookDisplayName = "ISBN";
-            List officeBookList = _sharePointList.Where(x => x.DisplayName.Contains(BorrowedBookDisplayName)).FirstOrDefault();
-            string listId = officeBookList.Id;
-            DateTime returnDate = borrowedResources.ReturnDate;
-            DateTime borrowDate = borrowedResources.BorrowDate;
-            DateTime dueDate = borrowedResources.DueDate;
-            dueDate = borrowDate.AddDays(14);
-            IListItemsCollectionPage officeBookItem = await _sites.GetListItems(graphClient, siteId, listId);
-            if (returnDate == null)
-            {
-                //Book is unavailable                 
-            }
+            _sharePointList = await _sites.GetLists(graphClient, siteId);
 
-            else if ((returnDate != null) && (borrowDate > returnDate))
+            if (_sharePointList != null)
             {
-                //book is available.
-                IDictionary<string, object> data = new Dictionary<string, object>
-                {
-                    {"ISBN" , borrowedResources.ISBN},
-                    {"BookTitle",borrowedResources.BookTitle },
-                    {"Author", borrowedResources.Author },
-                    {"BorrowDate", borrowedResources.BorrowDate },
-                    {"ReturnDate",borrowedResources.ReturnDate },
-                };
-                bool borrowOfficeBook = await _sites.AddListItem(graphClient, siteId, listId, data);
-                return borrowOfficeBook;
+                List officeBookList = _sharePointList.Where(x => x.DisplayName.Contains(BorrowedBookDisplayName)).FirstOrDefault();
+                string listId = officeBookList.Id;
+                DateTime returnDate = borrowedResources.ReturnDate;
+                DateTime borrowDate = borrowedResources.BorrowDate;
+                DateTime dueDate = borrowedResources.DueDate;
+                dueDate = borrowDate.AddDays(14);
+                IListItemsCollectionPage officeBookItem = await _sites.GetListItems(graphClient, siteId, listId);
+                    if (returnDate == null)
+                    {
+                        //Book is unavailable                 
+                    }
+
+                    else if (returnDate != null)
+                    {
+                        //book is available.
+                        IDictionary<string, object> data = new Dictionary<string, object>
+                        {
+                            {"BorrowedResourceID", borrowedResources.ItemId },
+                            {"ISBN" , borrowedResources.ISBN},
+                            {"Title",borrowedResources.BookTitle },
+                            {"Author0", borrowedResources.Author },
+                            {"BorrowDate", borrowedResources.BorrowDate },
+                            {"ReturnDate",borrowedResources.ReturnDate },
+                        };
+                        bool borrowOfficeBook = await _sites.AddListItem(graphClient, siteId, listId, data);
+                        return borrowOfficeBook;
+                    }
             }
             return false;
         }
