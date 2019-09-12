@@ -11,6 +11,7 @@ $(document).ready(function () {
         $(this).parent().fadeTo(500, 0).slideUp(500);
     });
 
+    //Displays Office Items in a table
     $('#tableItems').DataTable({
         "columnDefs": [
             { "orderable": false, "targets": [-1, -2] }
@@ -42,12 +43,8 @@ $(document).ready(function () {
             }
         ]  
     });
-    $('#t_borrowed_items').DataTable({
-        "columnDefs": [
-            { "orderable": false, "targets": -1 }
-        ]
-        
-    });
+
+    //Displays Office Books in a table
     $('#tableBooks').DataTable({
         "columnDefs": [
             { "orderable": false, "targets": [0, -1, -2,] }
@@ -75,38 +72,38 @@ $(document).ready(function () {
             {
                 "data": "id",
                 "render": function (data) {
-                    return '<a href="#BorrowFormModal" id="borrow('+data+')" onclick="BorrowBook(' + data + ')">Borrow</a>'
+                    return '<a href="#BorrowFormModal" id="borrowBook('+data+')" onclick="BorrowBook(' + data + ')">Borrow</a>'
                 }
             }
         ]  
     });
 
-    $('#t_current').DataTable();
-    //    {
-    //    "columnDefs": [
-    //        { "orderable": false, "targets": [-1] }
-    //    ],
-    //    "ajax": {
-    //        "url": "/OfficeBooks/BorrowBook",
-    //        "type": "GET",
-    //        "datatype": "json"
-    //    },
-    //    "columns": [
-    //        {
-    //            "data": "BorrowedResourceID",
-    //            'visible': false
-    //        },
-    //        { "data": "BookTitle" },
-    //        { "data": "BorrowDate" },
-    //        { "data": "DueDate" },
-    //        {
-    //            "data": "BorrowedResourceID",
-    //            "render": function (data) {
-    //                return '<a href="#"> Return </a>'
-    //            }
-    //        }
-    //    ]
-    //});
+    //Display's currently borrowed Items and Books
+    $('#currentlyBorrowed').DataTable({
+        "columnDefs": [
+                { "orderable": false, "targets": [0, -1, -2,] }
+        ],
+        "ajax": {
+            "url": "",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            {
+                "data": "BorrowedResourceID",
+                'visible': false
+            },
+            { "data": "Title" },
+            { "data": "BorrowDate" },
+            { "data": "DueDate" },
+            {
+                "data": "BorrowedResourceID",
+                "render": function (data) {
+                    return '<a href="#" id="current(' + data + ')"> Return </a>'
+                }
+            }
+        ]
+    });
 
     //resetting form elements whenever a div is closed
     $('.modal').on('hidden.bs.modal', function () {
@@ -397,6 +394,38 @@ $(document).ready(function () {
             })
         });
     });
+
+    //Borrowing an Item
+    $("#SubmitBorrowItem").click(function () {
+        var itemId = $('#borrowItemId').val();
+        var serialNo = $('#itemSerialNo').val();
+        var itemName = $('#borrowItemTitle').val();
+        var borrowDate = $('#borrowItemDate').val();
+        var returnDate = $('#returnItemDate').val();
+        $.ajax({
+            type: 'POST',
+            url: '/OfficeItems/BorrowItem',
+            data: {
+                ItemId: itemId,
+                SerialNo: serialNo,
+                Title: itemName,
+                BorrowDate: borrowDate,
+                ReturnDate: returnDate
+            },
+            error: function (xhr) {
+                alert('Error: ' + xhr.statusText);
+            },
+            success: (function (result) {
+                if (result) {
+                    alert("Item Borrowed");
+                    $('#BorrowItemModal').modal("hide");
+                }
+                else {
+                    alert("Unable to Borrow Item")
+                }
+            })
+        });
+    });
 });
 
 function UpdateOfficeBook(ItemId) {
@@ -508,10 +537,10 @@ function BorrowBook(borrowItemId) {
     });
 }
 
-function BorrowItem(ItemId) {
+function BorrowItem(borrowItemId) {
     $.ajax({
         url: '/OfficeItems/GetItemsById',
-        data: { Id: ItemId },
+        data: { Id: borrowItemId },
         success: (function (result) {
             $('#ItemId').val(result.ItemID);
             $('#SerialNo').val(result.SerialNo);

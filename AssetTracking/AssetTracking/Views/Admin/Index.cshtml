@@ -8,61 +8,49 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to the Office Asset Tracking Tool</h1>
 </div>
-
+<div class="row"></div>
+<div class="row"></div>
 <div class="row">
-    <div class=" col-md-5">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Office Books</h5>
-                <p class="card-text">Total Books</p>
-                <p class="card-text" style="font-size:40px">10</p>
-                <a class="btn btn-primary" asp-controller="OfficeBooks" asp-action="OfficeBooks">Add</a>
-                <a class="btn btn-primary" asp-controller="OfficeBooks" asp-action="OfficeBooks">View</a>
+    <div class="col-md-6" style="border-right: 1px solid #eee; padding-bottom:50px;">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="~/images/bookStack.jpg" style="height:150px;" />
+            </div>
+            <div class="col-md-7 text-center">
+                <h5> Books </h5>
+                <p style="padding:20px 0px 20px 0px ;"> Borrow books available in the office</p>
+                <a class="waves-effect waves-light btn-large" asp-controller="OfficeBooks" asp-action="OfficeBooks">View Books</a>
             </div>
         </div>
     </div>
-    <div class="col-md-1"></div>
-    <div class=" col-md-5">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Other Office Items</h5>
-                <p class="card-text">Total Items</p>
-                <p class="card-text" style="font-size:40px">5</p>
-                <a class="btn btn-primary" asp-controller="OfficeItems" asp-action="OfficeItems">Add</a>
-                <a class="btn btn-primary" asp-controller="OfficeItems" asp-action="OfficeItems">View</a>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="~/images/officeItems.jpg" style="height:150px;" />
+            </div>
+            <div class="col-md-7 text-center">
+                <h5> Other Office Items </h5>
+                <p style="padding:20px 0px 20px 0px "> Borrow other items available in the office.</p>
+                <a class="waves-effect waves-light btn-large" asp-controller="OfficeItems" asp-action="OfficeItems">View Other Items </a>
             </div>
         </div>
     </div>
 </div>
+<div class="row"></div>
+<div class="row"></div>
 
 <h4>Currently Borrowed Items</h4>
 <div class="table-responsive">
-    <table class="table table-hover" id="t_current">
+    <table class="table table-hover" id="currentlyBorrowed">
         <thead>
             <tr>
+                <th class="th-lg" style="display:none">ItemId</th>
                 <th scope="col">Item Name</th>
-                <th scope="col">Borrowed By</th>
                 <th scope="col">Date Borrowed</th>
                 <th scope="col">Due Date</th>
                 <th scope="col"></th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>Cracking the Coding Interview</td>
-                <td>Elinor Kaguongo</td>
-                <td>1/7/2019</td>
-                <td id="due_date">03/07/2019</td>
-                <td><span id="overdue" style="display:none"><i class="fas fa-exclamation"></i> </span><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Send Reminder</button></td>
-            </tr>
-            <tr>
-                <td>Professional C# 7 and .Net Core</td>
-                <td>Nicole Sigei</td>
-                <td>3/7/2019</td>
-                <td id="due_date">19/7/2019<span id="overdue" style="display:none"><i class="fas fa-exclamation"></i> </span></td>
-                <td><button type="button" class="btn btn-teal btn-rounded btn-sm m-0">Send Reminder</button></td>
-            </tr>
-        </tbody>
     </table>
 </div>
 

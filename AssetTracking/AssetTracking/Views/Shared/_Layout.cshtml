@@ -20,7 +20,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css" />
 
 
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/jquery-validate/jquery.validate.js"></script>
@@ -63,13 +62,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="OfficeBooks" asp-action="OfficeBooks">Office Books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Test" asp-action="Test">Test</a>
-                        </li>
-                        <li class="nav-item">
                             @await Html.PartialAsync("_LoginPartial")
                         </li>
                     </ul>
-                    
+
                 </div>
             </div>
         </nav>
@@ -88,6 +84,7 @@
     @*<script src="/https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>*@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
 
     @RenderSection("Scripts", required: false)
 </body>
