@@ -1,7 +1,9 @@
-@{
+﻿@{
     ViewData["Title"] = "Office Items";
 }
 <h1>@ViewData["Title"]</h1>
+
+<div id="itemResult" role="alert"></div>
 
 <div class="text-left">
     <button type="button" onclick="AddOfficeItem()" class="btn btn-info mb-2 waves-effect waves-light">
@@ -33,6 +35,8 @@
                         </th>
                         <th class="th-lg">
                         </th>
+                        <th class="th-lg">
+                        </th>
                     </tr>
                 </thead>
                 <!--Table head-->
@@ -43,8 +47,7 @@
 
 </div>
 
-<div class="modal fade" id="EditItemForm" tabindex="-1" role="dialog" aria-labelledby="Edit"
-     aria-hidden="true">
+<div class="modal fade" id="EditItemForm" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog cascading-modal" role="document">
         <!--Content-->
         <div class="modal-content">
@@ -80,6 +83,49 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!--Borrowing Item  Modal-->
+<div class="modal fade" id="BorrowItemModal" tabindex="-1" role="dialog" aria-labelledby="BorrowItem" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header darken-3 white-text" style="background-color:#2bbbad">
+                <h4 class="title"><i class="fas fa-pencil-alt"></i> Borrow Item</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <form>
+                <div class="modal-body mb-0">
+                    <div class="md-form form-sm">
+                        <input type="text" id="borrowItemId" name="borrowItemId" class="form-control" style="display:none">
+                        <input type="text" id="itemSerialNo" class="form-control">
+                        <label for="form8" class="active">Item Serial No.</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input type="text" id="borrowItemTitle" class="form-control">
+                        <label for="form9" class="active">Book Title</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input type="date" id="borrowItemDate" class="form-control" data-date-format="dd/mm/yyyy">
+                        <label for="form9" class="active">Borrow Date </label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <input type="date" id="returnItemDate" class="form-control">
+                        <label for="form9" class="active">Return Date </label>
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button id="SubmitBorrowItem" type="button" class="btn btn-info mb-2 waves-effect waves-light">Borrow<i class="fas fa-send ml-1"></i></button>
+                    </div>
+
+                </div>
+            </form>
         </div>
         <!--/.Content-->
     </div>

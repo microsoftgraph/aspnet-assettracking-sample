@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AssetTracking.Helpers;
 using AssetTracking.Interfaces;
 using AssetTracking.Models;
+using AssetTracking.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
@@ -16,12 +17,14 @@ namespace AssetTracking.Controllers
         private readonly IGraphSdkHelper _graphSdkHelper;
         private GraphServiceClient _graphClient;
         private readonly IOfficeItemRepository _officeItemRepository;
+        private readonly IBorrowedResources _borrowedResourcesRespository;
         private readonly string siteId; 
         
-        public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository, IConfiguration configuration)
+        public OfficeItemsController(IGraphSdkHelper graphSdkHelper, IOfficeItemRepository officeItemRepository, IConfiguration configuration, IBorrowedResources borrowedResourcesRepository)
         {
             _graphSdkHelper = graphSdkHelper;
             _officeItemRepository = officeItemRepository;
+            _borrowedResourcesRespository = borrowedResourcesRepository;
             siteId = configuration["SiteId"];
         }
 
@@ -91,6 +94,19 @@ namespace AssetTracking.Controllers
             {
                 _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
                 bool result = await _officeItemRepository.DeleteItem(officeItem, _graphClient, siteId);
+                return Json(new { IsSuccess = result });
+            }
+            else
+            {
+                return Json(new { IsSuccess = false });
+            }
+        }
+        public async Task<JsonResult> BorrowItem (BorrowedResources borrowedResources)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                _graphClient = _graphSdkHelper.GetAuthenticatedClient((ClaimsIdentity)User.Identity);
+                bool result = await _borrowedResourcesRespository.BorrowItem(borrowedResources, _graphClient, siteId);
                 return Json(new { IsSuccess = result });
             }
             else
