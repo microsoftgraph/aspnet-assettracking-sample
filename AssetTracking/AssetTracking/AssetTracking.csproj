@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="4.1.0" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="1.1.5-preview" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="5.5.0" />
-    <PackageReference Include="Microsoft.Owin" Version="4.0.1" />
+    <PackageReference Include="Microsoft.Owin" Version="4.2.2" />
     <PackageReference Include="Microsoft.Owin.Security" Version="4.0.1" />
     <PackageReference Include="Microsoft.Owin.Security.OAuth" Version="4.0.1" />
     <PackageReference Include="Microsoft.Owin.Security.OpenIdConnect" Version="4.0.1" />
